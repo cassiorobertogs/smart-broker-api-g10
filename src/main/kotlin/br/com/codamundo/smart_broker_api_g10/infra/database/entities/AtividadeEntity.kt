@@ -1,9 +1,5 @@
 package br.com.codamundo.smart_broker_api_g10.infra.database.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
 import jakarta.persistence.*
 
 @Entity
@@ -14,14 +10,15 @@ data class AtividadeEntity(
 
     @ManyToOne
     @JoinColumn(name = "id_oficina", nullable = false)
-    val oficina: OficinaEntity,  // Relacionamento com a oficina (entidade a ser criada)
+    val oficina: OficinaEntity,  // Relacionamento com a Oficina
 
-    @Column(nullable = false)
-    val turma: String,
+    @ManyToOne
+    @JoinColumn(name = "id_turma", nullable = false)
+    val turma: TurmaEntity,  // Relacionamento com a Turma
 
     @ManyToOne
     @JoinColumn(name = "id_professor", nullable = false)
-    val professor: ProfessorEntity,  // Relacionamento com o professor
+    val professor: ProfessorEntity,  // Relacionamento com o Professor
 
     @Column(nullable = false)
     val enunciado: String,

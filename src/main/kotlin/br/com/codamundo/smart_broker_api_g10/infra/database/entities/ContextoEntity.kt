@@ -1,13 +1,17 @@
 package br.com.codamundo.smart_broker_api_g10.infra.database.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity
-class ContextoEntity(
+data class ContextoEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    @Column(name = "id_contexto")
+    val idContexto: Long? = null,
+
+    @Column(nullable = false)
+    val prompt: String,
+
+    @Column(name = "coeficiente_didatico", nullable = false)
+    val coeficienteDidatico: Double
 )
