@@ -1,9 +1,11 @@
 package br.com.codamundo.smart_broker_api_g10.adapters.output.gateways
 
-import br.com.codamundo.smart_broker_api_g10.domain.models.*
 import br.com.codamundo.smart_broker_api_g10.adapters.output.repositories.*
+import br.com.codamundo.smart_broker_api_g10.domain.entities.*
+import br.com.codamundo.smart_broker_api_g10.infra.database.entities.*
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
+import java.util.Optional
 
 @Component
 class DatabaseGatewayImpl @Autowired constructor(
@@ -13,85 +15,85 @@ class DatabaseGatewayImpl @Autowired constructor(
     private val contextoRepository: ContextoRepository,
     private val oficinaRepository: OficinaRepository,
     private val turmaRepository: TurmaRepository,
-    private val respostaRepository: RespostaRepository  
+    private val respostaRepository: RespostaRepository
 ) : DatabaseOutput {
 
     // Métodos relacionados ao Aluno
-    override fun findAlunoById(id: Long): Aluno? {
-        return alunoRepository.findById(id).orElse(null)
+    override fun findAlunoById(id: Long): Optional<AlunoEntity> {
+        return alunoRepository.findById(id)
     }
 
-    override fun saveAluno(aluno: Aluno): Aluno {
+    override fun saveAluno(aluno: AlunoEntity): AlunoEntity {
         return alunoRepository.save(aluno)
     }
 
-    override fun updateAluno(aluno: Aluno): Aluno {
+    override fun updateAluno(aluno: AlunoEntity): AlunoEntity {
         return alunoRepository.save(aluno)
     }
 
     // Métodos relacionados à Atividade
-    override fun findAtividadeById(id: Long): Atividade? {
-        return atividadeRepository.findById(id).orElse(null)
+    override fun findAtividadeById(id: Long): Optional<AtividadeEntity> {
+        return atividadeRepository.findById(id)
     }
 
-    override fun saveAtividade(atividade: Atividade): Atividade {
+    override fun saveAtividade(atividade: AtividadeEntity): AtividadeEntity {
         return atividadeRepository.save(atividade)
     }
 
-    override fun updateAtividade(atividade: Atividade): Atividade {
+    override fun updateAtividade(atividade: AtividadeEntity): AtividadeEntity {
         return atividadeRepository.save(atividade)
     }
 
     // Métodos relacionados ao Professor
-    override fun findProfessorById(id: Long): Professor? {
-        return professorRepository.findById(id).orElse(null)
+    override fun findProfessorById(id: Long): Optional<ProfessorEntity> {
+        return professorRepository.findById(id)
     }
 
-    override fun saveProfessor(professor: Professor): Professor {
+    override fun saveProfessor(professor: ProfessorEntity): ProfessorEntity {
         return professorRepository.save(professor)
     }
 
-    override fun updateProfessor(professor: Professor): Professor {
+    override fun updateProfessor(professor: ProfessorEntity): ProfessorEntity {
         return professorRepository.save(professor)
     }
 
     // Métodos relacionados ao Contexto
-    override fun findContextoById(id: Long): Contexto? {
-        return contextoRepository.findById(id).orElse(null)
+    override fun findContextoById(id: Long): Optional<ContextoEntity> {
+        return contextoRepository.findById(id)
     }
 
-    override fun saveContexto(contexto: Contexto): Contexto {
+    override fun saveContexto(contexto: ContextoEntity): ContextoEntity {
         return contextoRepository.save(contexto)
     }
 
-    override fun updateContexto(contexto: Contexto): Contexto {
+    override fun updateContexto(contexto: ContextoEntity): ContextoEntity {
         return contextoRepository.save(contexto)
     }
 
     // Métodos relacionados à Oficina
-    override fun findOficinaById(id: Long): Oficina? {
-        return oficinaRepository.findById(id).orElse(null)
+    override fun findOficinaById(id: Long): Optional<OficinaEntity> {
+        return oficinaRepository.findById(id)
     }
 
-    override fun saveOficina(oficina: Oficina): Oficina {
+    override fun saveOficina(oficina: OficinaEntity): OficinaEntity {
         return oficinaRepository.save(oficina)
     }
 
     // Métodos relacionados à Turma
-    override fun findTurmaById(id: Long): Turma? {
-        return turmaRepository.findById(id).orElse(null)
+    override fun findTurmaById(id: Long): Optional<TurmaEntity> {
+        return turmaRepository.findById(id)
     }
 
-    override fun saveTurma(turma: Turma): Turma {
+    override fun saveTurma(turma: TurmaEntity): TurmaEntity {
         return turmaRepository.save(turma)
     }
 
     // Métodos relacionados à Resposta
-    override fun findRespostaById(id: Long): Resposta? {
-        return respostaRepository.findById(id).orElse(null)
+    override fun findRespostaById(id: Long): Optional<RespostaEntity> {
+        return respostaRepository.findById(id)
     }
 
-    override fun saveResposta(resposta: Resposta): Resposta {
+    override fun saveResposta(resposta: RespostaEntity): RespostaEntity {
         return respostaRepository.save(resposta)
     }
 }

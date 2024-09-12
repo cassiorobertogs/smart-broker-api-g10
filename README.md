@@ -91,6 +91,69 @@ smart_broker_api_g10
 4. **Push para a branch (`git push origin feature/nova-feature`)**
 5. **Abra um Pull Request**
 
+## Banco de Dados
+
+### Diagrama Entidade-Relacionamento (ER)
+
+```mermaid
+graph LR;
+
+%% Declaração das entidades (tabelas do banco de dados)
+Aluno[ALUNO]:::entity;
+Atividade[ATIVIDADE]:::entity;
+Professor[PROFESSOR]:::entity;
+Contexto[CONTEXTO]:::entity;
+Oficina[OFICINA]:::entity;
+Turma[TURMA]:::entity;
+Resposta[RESPOSTA]:::entity;
+
+%% Atributos de cada entidade
+
+%% Entidade Aluno: armazena informações sobre os alunos
+Aluno --> |id: Long, nome: String, idade: Integer, oficinaCadastrada: String, turma: String, pessoaComDeficiencia: Boolean, estiloAprendizagem: String, interessesHobbies: String, passaTempoPreferido: String, filmeSeriePreferido: String, artista: String| Aluno;
+
+%% Entidade Atividade: armazena dados das atividades propostas aos alunos
+Atividade --> |id: Long, enunciado: String, respostaEsperada: String, areaConhecimento: String, nivelDificuldade: String, objetivosAprendizagem: String| Atividade;
+
+%% Entidade Professor: armazena informações sobre os professores
+Professor --> |id: Long, nome: String, especialidade: String| Professor;
+
+%% Entidade Contexto: guarda os prompts e coeficientes didáticos para gerar feedback personalizado
+Contexto --> |id: Long, prompt: String, coeficienteDidatico: Double| Contexto;
+
+%% Entidade Oficina: informações da oficina na qual o aluno está inscrito
+Oficina --> |id: Long, escola: String| Oficina;
+
+%% Entidade Turma: contém dados sobre as turmas de alunos
+Turma --> |id: Long, quantidadeAlunos: Integer| Turma;
+
+%% Entidade Resposta: armazena as respostas dos alunos para as atividades
+Resposta --> |id: Long, respostaAluno: String, coeficienteAcertividade: Double, dataHoraResposta: LocalDateTime| Resposta;
+
+%% Relacionamentos entre as entidades
+
+%% Relacionamento entre Aluno e Turma (um aluno está em uma turma)
+Aluno --> Turma;
+
+%% Relacionamento entre Turma e Atividade (uma turma faz várias atividades)
+Turma --> Atividade;
+
+%% Relacionamento entre Professor e Atividade (um professor cria uma atividade)
+Professor --> Atividade;
+
+%% Relacionamento entre Atividade e Contexto (cada atividade está associada a um contexto)
+Atividade --> Contexto;
+
+%% Relacionamento entre Atividade e Resposta (cada atividade tem uma ou mais respostas dos alunos)
+Atividade --> Resposta;
+
+%% Relacionamento entre Turma e Oficina (uma turma pertence a uma oficina)
+Turma --> Oficina;
+
+%% Estilo para entidades
+classDef entity fill:#f9f,stroke:#333,stroke-width:2px;
+```
+
 ## Licença
 
 Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
