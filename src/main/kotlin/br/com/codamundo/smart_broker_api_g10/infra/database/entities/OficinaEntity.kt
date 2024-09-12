@@ -3,15 +3,12 @@ package br.com.codamundo.smart_broker_api_g10.infra.database.entities
 import jakarta.persistence.*
 
 @Entity
-data class ProfessorEntity(
+data class OficinaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_professor")
-    val idProfessor: Long? = null,
+    @Column(name = "id_oficina")
+    val idOficina: Long? = null,
 
     @Column(nullable = false)
-    val nome: String,
-
-    @Column(nullable = false)
-    val especialidade: String
+    val escola: String
 )
