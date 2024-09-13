@@ -1,0 +1,394 @@
+openapi: 3.0.0
+info:
+  title: Smart Broker API
+  version: 1.0.0
+  description: API para gerenciar alunos, atividades, contextos, correções de atividades e professores.
+
+servers:
+  - url: http://localhost:8080/api
+
+paths:
+  /alunos/{id}:
+    get:
+      summary: Obter um aluno por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do aluno
+        - in: header
+          name: Authorization
+          required: true
+          description: Token de autorização
+        - in: header
+          name: X-Request-ID
+          required: false
+          description: ID da solicitação
+      responses:
+        '200':
+          description: Aluno encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlunoResponse'
+
+    patch:
+      summary: Atualizar um aluno
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlunoRequest'
+      responses:
+        '204':
+          description: Aluno atualizado com sucesso
+
+  /alunos:
+    post:
+      summary: Criar um novo aluno
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlunoRequest'
+      responses:
+        '201':
+          description: Aluno criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlunoResponse'
+
+  /atividades/{id}:
+    get:
+      summary: Obter uma atividade por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      responses:
+        '200':
+          description: Atividade encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AtividadeResponse'
+
+    post:
+      summary: Criar uma nova atividade
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtividadeRequest'
+      responses:
+        '201':
+          description: Atividade criada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AtividadeResponse'
+
+    patch:
+      summary: Atualizar uma atividade
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtividadeRequest'
+      responses:
+        '204':
+          description: Atividade atualizada com sucesso
+
+  /contextos/{id}:
+    get:
+      summary: Obter um contexto por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      responses:
+        '200':
+          description: Contexto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContextoResponse'
+
+    post:
+      summary: Criar um novo contexto
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContextoRequest'
+      responses:
+        '201':
+          description: Contexto criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContextoResponse'
+
+    patch:
+      summary: Atualizar um contexto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContextoRequest'
+      responses:
+        '204':
+          description: Contexto atualizado com sucesso
+
+  /correcao-atividades/{atividadeId}:
+    post:
+      summary: Corrigir uma atividade
+      parameters:
+        - in: path
+          name: atividadeId
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      responses:
+        '200':
+          description: Correção realizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Correcao'
+
+  /professores/{id}:
+    get:
+      summary: Obter um professor por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      responses:
+        '200':
+          description: Professor encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfessorResponse'
+
+    post:
+      summary: Criar um novo professor
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfessorRequest'
+      responses:
+        '201':
+          description: Professor criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfessorResponse'
+
+    patch:
+      summary: Atualizar um professor
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Authorization
+          required: true
+        - in: header
+          name: X-Request-ID
+          required: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfessorRequest'
+      responses:
+        '204':
+          description: Professor atualizado com sucesso
+
+components:
+  schemas:
+    AlunoRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+        idade:
+          type: integer
+        email:
+          type: string
+    AlunoResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        idade:
+          type: integer
+        email:
+          type: string
+    AtividadeRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+        descricao:
+          type: string
+    AtividadeResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        descricao:
+          type: string
+    ContextoRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+        descricao:
+          type: string
+    ContextoResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        descricao:
+          type: string
+    Correcao:
+      type: object
+      properties:
+        atividadeId:
+          type: integer
+        nota:
+          type: number
+    ProfessorRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+        disciplina:
+          type: string
+    ProfessorResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        disciplina:
+          type: string
