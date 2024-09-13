@@ -1,5 +1,8 @@
 package br.com.codamundo.smart_broker_api_g10.adapters.input.controllers
 
+import br.com.codamundo.smart_broker_api_g10.application.ports.input.ProfessorInput
+import br.com.codamundo.smart_broker_api_g10.shared.dto.ProfessorRequestBodyDto
+import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.ProfessorResponse
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -22,9 +25,9 @@ class ProfesorController(private val professorInput: ProfessorInput) {
     fun createProfessor(
         @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
-        @RequestBody @Validated professorRequest: ProfessorRequest
+        @RequestBody @Validated professorRequestBodyDto: ProfessorRequestBodyDto
     ): ResponseEntity<ProfessorResponse> {
-        val novoProfessor = professorInput.createProfessor(professorRequest)
+        val novoProfessor = professorInput.createProfessor(professorRequestBodyDto)
         return ResponseEntity.status(201).body(novoProfessor)
     }
 
@@ -33,9 +36,9 @@ class ProfesorController(private val professorInput: ProfessorInput) {
         @PathVariable id: Long,
         @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
-        @RequestBody @Validated professorRequest: ProfessorRequest
+        @RequestBody @Validated professorRequestBodyDto: ProfessorRequestBodyDto
     ): ResponseEntity<Void> {
-        professorInput.updateProfessor(id, professorRequest)
+        professorInput.updateProfessor(id, professorRequestBodyDto)
         return ResponseEntity.noContent().build()
     }
 }
