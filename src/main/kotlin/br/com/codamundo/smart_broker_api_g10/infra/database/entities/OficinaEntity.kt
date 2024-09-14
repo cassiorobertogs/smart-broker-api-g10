@@ -6,8 +6,8 @@ import jakarta.persistence.*
 data class OficinaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_oficina")
-    val idOficina: Long? = null,
+    @Column(name = "oficina_id")
+    val oficinaId: Long? = null,
 
     @Column(nullable = false)
     val escola: String

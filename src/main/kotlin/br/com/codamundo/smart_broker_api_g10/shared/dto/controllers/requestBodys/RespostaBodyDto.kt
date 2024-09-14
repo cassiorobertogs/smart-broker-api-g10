@@ -1,4 +1,4 @@
-package br.com.codamundo.smart_broker_api_g10.shared.dto
+package br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

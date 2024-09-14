@@ -5,7 +5,6 @@ import br.com.codamundo.smart_broker_api_g10.domain.entities.*
 import br.com.codamundo.smart_broker_api_g10.infra.database.entities.*
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
-import java.util.Optional
 
 @Component
 class DatabaseGatewayImpl @Autowired constructor(
@@ -19,8 +18,8 @@ class DatabaseGatewayImpl @Autowired constructor(
 ) : DatabaseOutput {
 
     // Métodos relacionados ao Aluno
-    override fun findAlunoById(id: Long): Optional<AlunoEntity> {
-        return alunoRepository.findById(id)
+    override fun findAlunoById(id: Long): AlunoEntity? {
+        return alunoRepository.findById(id).orElse(null)
     }
 
     override fun saveAluno(aluno: AlunoEntity): AlunoEntity {
@@ -32,8 +31,8 @@ class DatabaseGatewayImpl @Autowired constructor(
     }
 
     // Métodos relacionados à Atividade
-    override fun findAtividadeById(id: Long): Optional<AtividadeEntity> {
-        return atividadeRepository.findById(id)
+    override fun findAtividadeById(id: Long): AtividadeEntity? {
+        return atividadeRepository.findById(id).orElse(null)
     }
 
     override fun saveAtividade(atividade: AtividadeEntity): AtividadeEntity {
@@ -45,8 +44,8 @@ class DatabaseGatewayImpl @Autowired constructor(
     }
 
     // Métodos relacionados ao Professor
-    override fun findProfessorById(id: Long): Optional<ProfessorEntity> {
-        return professorRepository.findById(id)
+    override fun findProfessorById(id: Long): ProfessorEntity? {
+        return professorRepository.findById(id).orElse(null)
     }
 
     override fun saveProfessor(professor: ProfessorEntity): ProfessorEntity {
@@ -58,8 +57,14 @@ class DatabaseGatewayImpl @Autowired constructor(
     }
 
     // Métodos relacionados ao Contexto
-    override fun findContextoById(id: Long): Optional<ContextoEntity> {
-        return contextoRepository.findById(id)
+    override fun findContextoById(id: Long): ContextoEntity? {
+        return contextoRepository.findById(id).orElse(null)
+    }
+
+    override fun findContextoPadrao(): ContextoEntity? {
+        // Implementar a lógica para buscar o contexto padrão
+        // Por exemplo, buscar o primeiro contexto na tabela
+        return contextoRepository.findFirstByOrderByIdContextoAsc()
     }
 
     override fun saveContexto(contexto: ContextoEntity): ContextoEntity {
@@ -71,8 +76,8 @@ class DatabaseGatewayImpl @Autowired constructor(
     }
 
     // Métodos relacionados à Oficina
-    override fun findOficinaById(id: Long): Optional<OficinaEntity> {
-        return oficinaRepository.findById(id)
+    override fun findOficinaById(id: Long): OficinaEntity? {
+        return oficinaRepository.findById(id).orElse(null)
     }
 
     override fun saveOficina(oficina: OficinaEntity): OficinaEntity {
@@ -80,8 +85,8 @@ class DatabaseGatewayImpl @Autowired constructor(
     }
 
     // Métodos relacionados à Turma
-    override fun findTurmaById(id: Long): Optional<TurmaEntity> {
-        return turmaRepository.findById(id)
+    override fun findTurmaById(id: Long): TurmaEntity? {
+        return turmaRepository.findById(id).orElse(null)
     }
 
     override fun saveTurma(turma: TurmaEntity): TurmaEntity {
@@ -89,8 +94,8 @@ class DatabaseGatewayImpl @Autowired constructor(
     }
 
     // Métodos relacionados à Resposta
-    override fun findRespostaById(id: Long): Optional<RespostaEntity> {
-        return respostaRepository.findById(id)
+    override fun findRespostaById(id: Long): RespostaEntity? {
+        return respostaRepository.findById(id).orElse(null)
     }
 
     override fun saveResposta(resposta: RespostaEntity): RespostaEntity {

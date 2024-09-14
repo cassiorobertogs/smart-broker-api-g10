@@ -1,7 +1,7 @@
 package br.com.codamundo.smart_broker_api_g10.adapters.input.controllers
 
 import br.com.codamundo.smart_broker_api_g10.application.ports.input.ProfessorInput
-import br.com.codamundo.smart_broker_api_g10.shared.dto.ProfessorRequestBodyDto
+import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.ProfessorRequestBodyDto
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.ProfessorResponse
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
