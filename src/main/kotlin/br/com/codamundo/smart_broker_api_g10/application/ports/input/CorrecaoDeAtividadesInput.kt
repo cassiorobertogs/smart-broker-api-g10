@@ -1,9 +1,12 @@
 package br.com.codamundo.smart_broker_api_g10.application.ports.input
 
-import br.com.codamundo.smart_broker_api_g10.domain.models.Correcao
+import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.RespostaBodyDto
+import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.CorrecaoResponse
 
 interface CorrecaoDeAtividadesInput {
-
-    // Método para corrigir uma atividade
-    fun corrigirAtividade(atividadeId: Long): Correcao
+    fun corrigirAtividade(
+        atividadeId: Long,
+        alunoId: Long,
+        respostaDoAluno: RespostaBodyDto
+    ): CorrecaoResponse
 }

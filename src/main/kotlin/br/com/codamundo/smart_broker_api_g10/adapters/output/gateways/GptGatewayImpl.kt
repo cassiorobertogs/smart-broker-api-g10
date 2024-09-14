@@ -1,5 +1,6 @@
 package br.com.codamundo.smart_broker_api_g10.adapters.output.gateways
 
+import br.com.codamundo.smart_broker_api_g10.application.ports.output.GptOutput
 import br.com.codamundo.smart_broker_api_g10.shared.dto.GptResponseDto
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient

@@ -6,7 +6,8 @@ import jakarta.persistence.*
 data class AtividadeEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    @Column(name = "atividade_id")
+    val atividadeId: Long? = null,
 
     @ManyToOne
     @JoinColumn(name = "id_oficina", nullable = false)

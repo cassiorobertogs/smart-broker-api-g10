@@ -10,7 +10,8 @@ import jakarta.persistence.Column
 data class AlunoEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    @Column(name = "aluno_id")
+    val alunoId: Long? = null,
 
     @Column(nullable = false)
     val nome: String,

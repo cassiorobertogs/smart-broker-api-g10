@@ -4,29 +4,30 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
+@Table(name = "Iresposta")
 data class RespostaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_resposta")
     val idResposta: Long? = null,
 
-    @ManyToOne
-    @JoinColumn(name = "id_aluno", nullable = false)
-    val aluno: AlunoEntity,  // Relacionamento com a tabela Aluno
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "aluno_id", nullable = false)
+    val aluno: AlunoEntity,
 
-    @Column(name = "resposta_aluno", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "atividade_id", nullable = false)
+    val atividade: AtividadeEntity,
+
+    @Column(name = "resposta_aluno", nullable = false, columnDefinition = "TEXT")
     val respostaAluno: String,
+
+    @Column(name = "resposta_correcao", nullable = false, columnDefinition = "TEXT")
+    val respostaCorrecao: String,
 
     @Column(name = "coeficiente_acertividade", nullable = false)
     val coeficienteAcertividade: Double,
 
     @Column(name = "data_hora_resposta", nullable = false, updatable = false)
-    val dataHoraResposta: LocalDateTime? = null
-) {
-    @PrePersist
-    fun prePersist() {
-        if (dataHoraResposta == null) {
-            (this as RespostaEntity).dataHoraResposta = LocalDateTime.now()
-        }
-    }
-}
+    val dataHoraResposta: LocalDateTime = LocalDateTime.now()
+)

@@ -1,11 +1,14 @@
 package br.com.codamundo.smart_broker_api_g10.adapters.input.controllers
 
+import br.com.codamundo.smart_broker_api_g10.application.ports.input.AtividadeInput
+import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.AtividadeRequestBodyDto
+import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.AtividadeResponse
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 
 @RestController
-@RequestMapping("/api/atividades")
+@RequestMapping("atividades")
 class AtividadeController(private val atividadeInput: AtividadeInput) {
 
     @GetMapping("/{id}")
@@ -22,9 +25,9 @@ class AtividadeController(private val atividadeInput: AtividadeInput) {
     fun createAtividade(
         @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
-        @RequestBody @Validated atividadeRequest: AtividadeRequest
+        @RequestBody @Validated atividadeRequestBodyDto: AtividadeRequestBodyDto
     ): ResponseEntity<AtividadeResponse> {
-        val novaAtividade = atividadeInput.createAtividade(atividadeRequest)
+        val novaAtividade = atividadeInput.createAtividade(atividadeRequestBodyDto)
         return ResponseEntity.status(201).body(novaAtividade)
     }
 
@@ -33,9 +36,9 @@ class AtividadeController(private val atividadeInput: AtividadeInput) {
         @PathVariable id: Long,
         @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
-        @RequestBody @Validated atividadeRequest: AtividadeRequest
+        @RequestBody @Validated atividadeRequestBodyDto: AtividadeRequestBodyDto
     ): ResponseEntity<Void> {
-        atividadeInput.updateAtividade(id, atividadeRequest)
+        atividadeInput.updateAtividade(id, atividadeRequestBodyDto)
         return ResponseEntity.noContent().build()
     }
 }
