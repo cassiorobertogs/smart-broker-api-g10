@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated
 
 @RestController
 @RequestMapping("/api/professores")
-class ProfesorController(private val professorInput: ProfessorInput) {
+class ProfessorController(private val professorInput: ProfessorInput) {
 
     @GetMapping("/{id}")
     fun getProfessor(
@@ -19,6 +19,15 @@ class ProfesorController(private val professorInput: ProfessorInput) {
     ): ResponseEntity<ProfessorResponse> {
         val professor = professorInput.getProfessor(id)
         return ResponseEntity.ok(professor)
+    }
+
+    @GetMapping
+    fun getAllProfessores(
+        @RequestHeader("Authorization") authorization: String,
+        @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
+    ): ResponseEntity<List<ProfessorResponse>> {
+        val professores = professorInput.getAllProfessores()
+        return ResponseEntity.ok(professores)
     }
 
     @PostMapping
@@ -39,6 +48,16 @@ class ProfesorController(private val professorInput: ProfessorInput) {
         @RequestBody @Validated professorRequestBodyDto: ProfessorRequestBodyDto
     ): ResponseEntity<Void> {
         professorInput.updateProfessor(id, professorRequestBodyDto)
+        return ResponseEntity.noContent().build()
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteProfessor(
+        @PathVariable id: Long,
+        @RequestHeader("Authorization") authorization: String,
+        @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
+    ): ResponseEntity<Void> {
+        professorInput.deleteProfessor(id)
         return ResponseEntity.noContent().build()
     }
 }

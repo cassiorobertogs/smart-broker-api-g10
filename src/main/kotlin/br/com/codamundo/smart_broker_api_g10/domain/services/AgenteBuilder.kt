@@ -16,7 +16,7 @@ class AgenteBuilder {
             Passa Tempo Preferido: ${agenteModel.aluno.passaTempoPreferido}
             Filme/Série Preferido: ${agenteModel.aluno.filmeSeriePreferido}
             Artista Favorito: ${agenteModel.aluno.artista}
-            Pessoa com Deficiência: ${if (agenteModel.aluno.pessoaComDeficiencia == true) "Sim, tipo: ${agenteModel.aluno.tipodDeficiencia}" else "Não"}
+            Pessoa com Deficiência: ${if (agenteModel.aluno.pessoaComDeficiencia == true) "Sim, tipo: ${agenteModel.aluno.pessoaComDeficiencia}" else "Não"}
             
             **Dados da Atividade:**
             Enunciado: ${agenteModel.atividade.enunciado}

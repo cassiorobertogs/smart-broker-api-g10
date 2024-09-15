@@ -15,9 +15,15 @@ class AlunoUseCase(private val databaseOutput: DatabaseOutput) : AlunoInput {
         return AlunoResponse.fromEntity(alunoEntity)
     }
 
+    override fun getAllAlunos(): List<AlunoResponse> {
+        val alunos = databaseOutput.findAllAlunos()
+        return alunos.map { AlunoResponse.fromEntity(it) }
+    }
+
     override fun createAluno(alunoDto: AlunoRequestBodyDto): AlunoResponse {
-        val turma = databaseOutput.findTurmaById(alunoDto.turmaId)
-            ?: throw NotFoundException("Turma não encontrada com id ${alunoDto.turmaId}")
+        val turma = databaseOutput.findTurmaById(alunoDto.idTurma)
+            ?: throw NotFoundException("Turma não encontrada com id ${alunoDto.idTurma}")
+
         val alunoEntity = AlunoEntity(
             turma = turma,
             nome = alunoDto.nome,
@@ -36,8 +42,10 @@ class AlunoUseCase(private val databaseOutput: DatabaseOutput) : AlunoInput {
     override fun updateAluno(id: Long, alunoDto: AlunoRequestBodyDto) {
         val alunoExistente = databaseOutput.findAlunoById(id)
             ?: throw NotFoundException("Aluno não encontrado com id $id")
-        val turma = databaseOutput.findTurmaById(alunoDto.turmaId)
-            ?: throw NotFoundException("Turma não encontrada com id ${alunoDto.turmaId}")
+
+        val turma = databaseOutput.findTurmaById(alunoDto.idTurma)
+            ?: throw NotFoundException("Turma não encontrada com id ${alunoDto.idTurma}")
+
         val updatedAluno = alunoExistente.copy(
             turma = turma,
             nome = alunoDto.nome ?: alunoExistente.nome,
@@ -53,9 +61,8 @@ class AlunoUseCase(private val databaseOutput: DatabaseOutput) : AlunoInput {
     }
 
     override fun deleteAluno(id: Long) {
-        if (databaseOutput.findAlunoById(id) == null) {
-            throw NotFoundException("Aluno não encontrado com id $id")
-        }
+        val alunoExistente = databaseOutput.findAlunoById(id)
+            ?: throw NotFoundException("Aluno não encontrado com id $id")
         databaseOutput.deleteAluno(id)
     }
 }

@@ -8,4 +8,5 @@ interface TurmaInput {
     fun createTurma(request: TurmaRequest): TurmaResponse
     fun updateTurma(id: Long, request: TurmaRequest)
     fun deleteTurma(id: Long)
+    fun getAllTurmas(): List<TurmaResponse>
 }

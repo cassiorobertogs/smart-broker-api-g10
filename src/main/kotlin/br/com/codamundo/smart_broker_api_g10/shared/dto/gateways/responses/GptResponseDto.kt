@@ -1,5 +1,7 @@
 package br.com.codamundo.smart_broker_api_g10.shared.dto.gateways.responses
 
+import br.com.codamundo.smart_broker_api_g10.shared.dto.gateways.requestBodys.MessageDto
+
 data class GptResponseDto(
     val id: String,
     val `object`: String,

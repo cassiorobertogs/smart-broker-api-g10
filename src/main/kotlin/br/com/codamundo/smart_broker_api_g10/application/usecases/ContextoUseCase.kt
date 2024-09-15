@@ -35,9 +35,16 @@ class ContextoUseCase(private val databaseOutput: DatabaseOutput) : ContextoInpu
     }
 
     override fun deleteContexto(id: Long) {
-        if (databaseOutput.findContextoById(id) == null) {
-            throw NotFoundException("Contexto não encontrado com id $id")
-        }
+        // Verifica se o contexto existe antes de tentar deletar
+        val contextoExistente = databaseOutput.findContextoById(id)
+            ?: throw NotFoundException("Contexto não encontrado com id $id")
+
+        // Lógica de deleção do contexto
         databaseOutput.deleteContexto(id)
+    }
+
+    override fun getAllContextos(): List<ContextoResponse> {
+        val contextos = databaseOutput.findAllContextos()  // Obtém todos os contextos do banco de dados
+        return contextos.map { ContextoResponse.fromEntity(it) }  // Converte para uma lista de ContextoResponse
     }
 }

@@ -14,7 +14,7 @@ class OficinaController(private val oficinaInput: OficinaInput) {
 
     @GetMapping
     fun getAllOficinas(): ResponseEntity<List<OficinaResponse>> {
-        val oficinas = oficinaInput.igetAllOficinas()
+        val oficinas = oficinaInput.getAllOficinas()
         return ResponseEntity.ok(oficinas)
     }
 

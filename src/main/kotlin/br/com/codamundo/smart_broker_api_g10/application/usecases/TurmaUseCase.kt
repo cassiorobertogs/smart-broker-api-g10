@@ -18,16 +18,15 @@ class TurmaUseCase(
     }
 
     override fun createTurma(request: TurmaRequest): TurmaResponse {
-        val oficina = databaseOutput.findOficinaById(request.oficinaId)
+        val oficina = databaseOutput.findOficinaById(request.oficinaId!!)
             ?: throw NotFoundException("Oficina não encontrada com id ${request.oficinaId}")
 
-        val professor = databaseOutput.findProfessorById(request.professorId)
+        val professor = databaseOutput.findProfessorById(request.professorId!!)
             ?: throw NotFoundException("Professor não encontrado com id ${request.professorId}")
 
         val turmaEntity = TurmaEntity(
             oficina = oficina,
             professor = professor,
-            nome = request.nome,
             quantidadeAlunos = request.quantidadeAlunos
         )
         val savedTurma = databaseOutput.saveTurma(turmaEntity)
@@ -56,7 +55,6 @@ class TurmaUseCase(
         val updatedTurma = turmaExistente.copy(
             oficina = oficina,
             professor = professor,
-            nome = request.nome ?: turmaExistente.nome,
             quantidadeAlunos = request.quantidadeAlunos ?: turmaExistente.quantidadeAlunos
         )
         databaseOutput.saveTurma(updatedTurma)
@@ -67,5 +65,13 @@ class TurmaUseCase(
             throw NotFoundException("Turma não encontrada com id $id")
         }
         databaseOutput.deleteTurma(id)
+    }
+
+    override fun getAllTurmas(): List<TurmaResponse> {
+        val turmas = databaseOutput.findAllTurmas()
+        if (turmas.isEmpty()) {
+            throw NotFoundException("Nenhuma turma encontrada")
+        }
+        return turmas.map { TurmaResponse.fromEntity(it) }
     }
 }

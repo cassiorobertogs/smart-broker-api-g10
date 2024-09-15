@@ -21,4 +21,26 @@ class CorrecaoDeAtividadesController(private val correcaoDeAtividadesInput: Corr
         val correcao = correcaoDeAtividadesInput.corrigirAtividade(atividadeId, alunoId, respostaBodyDto)
         return ResponseEntity.ok(correcao)
     }
+
+    // Buscar todas as respostas de um aluno específico
+    @GetMapping("/aluno/{alunoId}")
+    fun getRespostasPorAluno(
+        @PathVariable alunoId: Long,
+        @RequestHeader("Authorization") authorization: String,
+        @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
+    ): ResponseEntity<List<CorrecaoResponse>> {
+        val respostas = correcaoDeAtividadesInput.findRespostasByAlunoId(alunoId)
+        return ResponseEntity.ok(respostas)
+    }
+
+    // Excluir todas as respostas associadas a uma atividade específica
+    @DeleteMapping("/atividade/{atividadeId}")
+    fun deletarRespostasPorAtividade(
+        @PathVariable atividadeId: Long,
+        @RequestHeader("Authorization") authorization: String,
+        @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
+    ): ResponseEntity<Void> {
+        correcaoDeAtividadesInput.deleteRespostasByAtividadeId(atividadeId)
+        return ResponseEntity.noContent().build()
+    }
 }

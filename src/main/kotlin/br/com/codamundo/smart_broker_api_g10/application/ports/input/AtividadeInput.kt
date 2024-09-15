@@ -7,7 +7,11 @@ interface AtividadeInput {
 
     fun getAtividade(id: Long): AtividadeResponse
 
+    fun getAllAtividades(): List<AtividadeResponse>
+
     fun createAtividade(atividadeRequest: AtividadeRequestBodyDto): AtividadeResponse
 
     fun updateAtividade(id: Long, atividadeRequest: AtividadeRequestBodyDto): AtividadeResponse
+
+    fun deleteAtividade(id: Long)
 }

@@ -5,4 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface RespostaRepository : JpaRepository<RespostaEntity, Long>
+interface RespostaRepository : JpaRepository<RespostaEntity, Long> {
+
+    // Buscar todas as respostas de um aluno específico
+    fun findByAlunoId(alunoId: Long): List<RespostaEntity>
+
+    // Buscar todas as respostas associadas a uma atividade específica
+    fun findByAtividadeId(atividadeId: Long): List<RespostaEntity>
+
+}

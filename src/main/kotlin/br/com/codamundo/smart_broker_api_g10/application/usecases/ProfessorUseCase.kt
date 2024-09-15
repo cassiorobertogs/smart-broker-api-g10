@@ -15,29 +15,36 @@ class ProfessorUseCase(private val databaseOutput: DatabaseOutput) : ProfessorIn
         return ProfessorResponse.fromEntity(professorEntity)
     }
 
-    override fun createProfessor(professorDto: ProfessorRequestBodyDto): ProfessorResponse {
+    override fun getAllProfessores(): List<ProfessorResponse> {
+        val professores = databaseOutput.findAllProfessores()
+        return professores.map { ProfessorResponse.fromEntity(it) }
+    }
+
+    override fun createProfessor(professorRequest: ProfessorRequestBodyDto): ProfessorResponse {
         val professorEntity = ProfessorEntity(
-            nome = professorDto.nome,
-            especialidade = professorDto.especialidade
+            nome = professorRequest.nome,
+            especialidade = professorRequest.especialidade
         )
         val savedProfessor = databaseOutput.saveProfessor(professorEntity)
         return ProfessorResponse.fromEntity(savedProfessor)
     }
 
-    override fun updateProfessor(id: Long, professorDto: ProfessorRequestBodyDto) {
+    override fun updateProfessor(id: Long, professorRequest: ProfessorRequestBodyDto) {
         val professorExistente = databaseOutput.findProfessorById(id)
             ?: throw NotFoundException("Professor não encontrado com id $id")
+
+        // Verificar se o nome foi passado e só atualizar se necessário
         val updatedProfessor = professorExistente.copy(
-            nome = professorDto.nome ?: professorExistente.nome,
-            especialidade = professorDto.especialidade ?: professorExistente.especialidade
+            nome = professorRequest.nome ?: professorExistente.nome,
+            especialidade = professorRequest.especialidade ?: professorExistente.especialidade
         )
+
         databaseOutput.saveProfessor(updatedProfessor)
     }
 
     override fun deleteProfessor(id: Long) {
-        if (databaseOutput.findProfessorById(id) == null) {
-            throw NotFoundException("Professor não encontrado com id $id")
-        }
+        val professorExistente = databaseOutput.findProfessorById(id)
+            ?: throw NotFoundException("Professor não encontrado com id $id")
         databaseOutput.deleteProfessor(id)
     }
 }

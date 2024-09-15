@@ -1,6 +1,7 @@
 package br.com.codamundo.smart_broker_api_g10.adapters.output.gateways
 
 import br.com.codamundo.smart_broker_api_g10.adapters.output.repositories.*
+import br.com.codamundo.smart_broker_api_g10.application.ports.output.DatabaseOutput
 import br.com.codamundo.smart_broker_api_g10.domain.exceptions.DatabaseException
 import br.com.codamundo.smart_broker_api_g10.domain.exceptions.NotFoundException
 import br.com.codamundo.smart_broker_api_g10.infra.database.entities.*
@@ -28,6 +29,15 @@ class DatabaseGatewayImpl(
         } catch (e: DataAccessException) {
             logger.error("Erro ao buscar o aluno com id $id.", e)
             throw DatabaseException("Erro ao buscar o aluno com id $id.", e)
+        }
+    }
+
+    override fun findAllAlunos(): List<AlunoEntity> {
+        return try {
+            alunoRepository.findAll()
+        } catch (e: DataAccessException) {
+            logger.error("Erro ao buscar todos os alunos.", e)
+            throw DatabaseException("Erro ao buscar todos os alunos.", e)
         }
     }
 
@@ -63,6 +73,15 @@ class DatabaseGatewayImpl(
         }
     }
 
+    override fun findAllAtividades(): List<AtividadeEntity> {
+        return try {
+            atividadeRepository.findAll()
+        } catch (e: DataAccessException) {
+            logger.error("Erro ao buscar todas as atividades.", e)
+            throw DatabaseException("Erro ao buscar todas as atividades.", e)
+        }
+    }
+
     override fun saveAtividade(atividade: AtividadeEntity): AtividadeEntity {
         return try {
             atividadeRepository.save(atividade)
@@ -95,6 +114,15 @@ class DatabaseGatewayImpl(
         }
     }
 
+    override fun findAllProfessores(): List<ProfessorEntity> {
+        return try {
+            professorRepository.findAll()
+        } catch (e: DataAccessException) {
+            logger.error("Erro ao buscar todos os professores.", e)
+            throw DatabaseException("Erro ao buscar todos os professores.", e)
+        }
+    }
+
     override fun saveProfessor(professor: ProfessorEntity): ProfessorEntity {
         return try {
             professorRepository.save(professor)
@@ -124,6 +152,15 @@ class DatabaseGatewayImpl(
         } catch (e: DataAccessException) {
             logger.error("Erro ao buscar o contexto com id $id.", e)
             throw DatabaseException("Erro ao buscar o contexto com id $id.", e)
+        }
+    }
+
+    override fun findAllContextos(): List<ContextoEntity> {
+        return try {
+            contextoRepository.findAll()
+        } catch (e: DataAccessException) {
+            logger.error("Erro ao buscar todos os contextos.", e)
+            throw DatabaseException("Erro ao buscar todos os contextos.", e)
         }
     }
 
@@ -168,6 +205,15 @@ class DatabaseGatewayImpl(
         }
     }
 
+    override fun findAllOficinas(): List<OficinaEntity> {
+        return try {
+            oficinaRepository.findAll()
+        } catch (e: DataAccessException) {
+            logger.error("Erro ao buscar todas as oficinas.", e)
+            throw DatabaseException("Erro ao buscar todas as oficinas.", e)
+        }
+    }
+
     override fun saveOficina(oficina: OficinaEntity): OficinaEntity {
         return try {
             oficinaRepository.save(oficina)
@@ -200,6 +246,15 @@ class DatabaseGatewayImpl(
         }
     }
 
+    override fun findAllTurmas(): List<TurmaEntity> {
+        return try {
+            turmaRepository.findAll()
+        } catch (e: DataAccessException) {
+            logger.error("Erro ao buscar todas as turmas.", e)
+            throw DatabaseException("Erro ao buscar todas as turmas.", e)
+        }
+    }
+
     override fun saveTurma(turma: TurmaEntity): TurmaEntity {
         return try {
             turmaRepository.save(turma)
@@ -223,6 +278,19 @@ class DatabaseGatewayImpl(
     }
 
     // Métodos relacionados à Resposta
+    override fun findRespostasByAlunoId(alunoId: Long): List<RespostaEntity> {
+        return try {
+            val respostas = respostaRepository.findByAlunoId(alunoId)
+            if (respostas.isEmpty()) {
+                logger.warn("Nenhuma resposta encontrada para o aluno com id $alunoId.")
+            }
+            respostas
+        } catch (e: DataAccessException) {
+            logger.error("Erro ao buscar as respostas do aluno com id $alunoId.", e)
+            throw DatabaseException("Erro ao buscar as respostas do aluno com id $alunoId.", e)
+        }
+    }
+
     override fun findRespostaById(id: Long): RespostaEntity? {
         return try {
             respostaRepository.findById(id).orElse(null)
@@ -241,18 +309,18 @@ class DatabaseGatewayImpl(
         }
     }
 
-    override fun deleteResposta(id: Long) {
+    override fun deleteRespostasByAtividadeId(atividadeId: Long) {
         try {
-            if (!respostaRepository.existsById(id)) {
-                logger.warn("Resposta não encontrada com id $id para exclusão.")
-                throw NotFoundException("Resposta não encontrada com id $id.")
+            val respostas = respostaRepository.findByAtividadeId(atividadeId)
+            if (respostas.isEmpty()) {
+                logger.warn("Nenhuma resposta encontrada para a atividade com id $atividadeId para exclusão.")
+                throw NotFoundException("Nenhuma resposta encontrada para a atividade com id $atividadeId.")
             }
-            respostaRepository.deleteById(id)
+            respostaRepository.deleteAll(respostas)
         } catch (e: DataAccessException) {
-            logger.error("Erro ao deletar a resposta com id $id.", e)
-            throw DatabaseException("Erro ao deletar a resposta com id $id.", e)
+            logger.error("Erro ao deletar as respostas da atividade com id $atividadeId.", e)
+            throw DatabaseException("Erro ao deletar as respostas da atividade com id $atividadeId.", e)
         }
     }
-
 
 }
