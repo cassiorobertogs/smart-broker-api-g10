@@ -5,4 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ContextoRepository : JpaRepository<ContextoEntity, Long>
+interface ContextoRepository : JpaRepository<ContextoEntity, Long> {
+
+    // Adicionando o método necessário para o DatabaseGatewayImpl
+    fun findFirstByOrderByIdContextoAsc(): ContextoEntity?
+}

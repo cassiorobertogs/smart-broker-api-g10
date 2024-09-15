@@ -1,14 +1,19 @@
 package br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import br.com.codamundo.smart_broker_api_g10.infra.database.entities.ContextoEntity
 
 data class ContextoResponse(
-    @JsonProperty("id")
     val id: Long,
-
-    @JsonProperty("prompt")
-    val prompt: String,
-
-    @JsonProperty("coeficiente_didatico")
-    val coeficienteDidatico: Double
-)
+    val prompt: String?,
+    val coeficienteDidatico: Double?
+) {
+    companion object {
+        fun fromEntity(contextoEntity: ContextoEntity): ContextoResponse {
+            return ContextoResponse(
+                id = contextoEntity.idContexto!!,
+                prompt = contextoEntity.prompt,
+                coeficienteDidatico = contextoEntity.coeficienteDidatico
+            )
+        }
+    }
+}

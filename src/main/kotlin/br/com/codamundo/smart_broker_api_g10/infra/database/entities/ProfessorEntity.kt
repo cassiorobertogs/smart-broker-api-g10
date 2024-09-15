@@ -9,9 +9,9 @@ data class ProfessorEntity(
     @Column(name = "id_professor")
     val idProfessor: Long? = null,
 
-    @Column(nullable = false)
-    val nome: String,
+    @Column
+    val nome: String? = null,
 
-    @Column(nullable = false)
-    val especialidade: String
+    @Column
+    val especialidade: String? = null
 )

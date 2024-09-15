@@ -9,30 +9,22 @@ data class AtividadeEntity(
     @Column(name = "atividade_id")
     val atividadeId: Long? = null,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_oficina", nullable = false)
-    val oficina: OficinaEntity,  // Relacionamento com a Oficina
+    val oficina: OficinaEntity,
 
-    @ManyToOne
-    @JoinColumn(name = "id_turma", nullable = false)
-    val turma: TurmaEntity,  // Relacionamento com a Turma
+    @Column
+    val enunciado: String? = null,
 
-    @ManyToOne
-    @JoinColumn(name = "id_professor", nullable = false)
-    val professor: ProfessorEntity,  // Relacionamento com o Professor
+    @Column(name = "resposta_esperada")
+    val respostaEsperada: String? = null,
 
-    @Column(nullable = false)
-    val enunciado: String,
+    @Column(name = "area_conhecimento")
+    val areaConhecimento: String? = null,
 
-    @Column(name = "resposta_esperada", nullable = false)
-    val respostaEsperada: String,
+    @Column(name = "nivel_dificuldade")
+    val nivelDificuldade: String? = null,
 
-    @Column(name = "area_conhecimento", nullable = false)
-    val areaConhecimento: String,
-
-    @Column(name = "nivel_dificuldade", nullable = false)
-    val nivelDificuldade: String,
-
-    @Column(name = "objetivos_aprendizagem", nullable = false)
-    val objetivosAprendizagem: String
+    @Column(name = "objetivos_aprendizagem")
+    val objetivosAprendizagem: String? = null
 )

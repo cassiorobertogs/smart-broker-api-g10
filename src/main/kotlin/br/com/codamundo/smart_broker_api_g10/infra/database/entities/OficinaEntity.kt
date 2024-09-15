@@ -9,6 +9,6 @@ data class OficinaEntity(
     @Column(name = "oficina_id")
     val oficinaId: Long? = null,
 
-    @Column(nullable = false)
-    val escola: String
+    @Column
+    val escola: String? = null
 )

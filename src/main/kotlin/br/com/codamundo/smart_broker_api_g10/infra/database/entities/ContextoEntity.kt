@@ -9,9 +9,9 @@ data class ContextoEntity(
     @Column(name = "id_contexto")
     val idContexto: Long? = null,
 
-    @Column(nullable = false)
-    val prompt: String,
+    @Column
+    val prompt: String? = null,
 
-    @Column(name = "coeficiente_didatico", nullable = false)
-    val coeficienteDidatico: Double
+    @Column(name = "coeficiente_didatico")
+    val coeficienteDidatico: Double? = null
 )

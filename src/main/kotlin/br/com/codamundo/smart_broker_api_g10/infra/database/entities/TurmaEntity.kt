@@ -9,10 +9,14 @@ data class TurmaEntity(
     @Column(name = "id_turma")
     val idTurma: Long? = null,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_oficina", nullable = false)
-    val oficina: OficinaEntity,  // Relacionamento com a tabela Oficina
+    val oficina: OficinaEntity,
 
-    @Column(name = "quantidade_alunos", nullable = false)
-    val quantidadeAlunos: Int
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_professor", nullable = false)
+    val professor: ProfessorEntity,
+
+    @Column(name = "quantidade_alunos")
+    val quantidadeAlunos: Int? = null
 )
