@@ -1,74 +1,86 @@
-package br.com.codamundo.smart_broker_api_g10.adapters.output.gateways
+package br.com.codamundo.smart_broker_api_g10.application.usecases
 
+import br.com.codamundo.smart_broker_api_g10.application.ports.input.CorrecaoDeAtividadesInput
+import br.com.codamundo.smart_broker_api_g10.application.ports.output.DatabaseOutput
 import br.com.codamundo.smart_broker_api_g10.application.ports.output.GptOutput
-import br.com.codamundo.smart_broker_api_g10.shared.dto.gateways.requestBodys.GptRequestDto
-import br.com.codamundo.smart_broker_api_g10.shared.dto.gateways.requestBodys.MessageDto
-import br.com.codamundo.smart_broker_api_g10.shared.dto.gateways.responses.GptResponseDto
-import com.fasterxml.jackson.databind.ObjectMapper
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.client.WebClient
-import reactor.core.publisher.Mono
+import br.com.codamundo.smart_broker_api_g10.domain.models.AgenteModel
+import br.com.codamundo.smart_broker_api_g10.domain.exceptions.NotFoundException
+import br.com.codamundo.smart_broker_api_g10.infra.database.entities.RespostaEntity
+import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.RespostaBodyDto
+import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.CorrecaoResponse
+import br.com.codamundo.smart_broker_api_g10.domain.services.AgenteBuilder
+import java.time.LocalDateTime
 
-@Component
-class GptGatewayImpl(
-    private val webClientBuilder: WebClient.Builder,
-    private val objectMapper: ObjectMapper,
-    @Value("\${openai.api.key}") private val apiKey: String
-) : GptOutput {
+class CorrecaoDeAtividadesUseCase(
+    private val gptOutput: GptOutput,  // Agora dependemos da interface
+    private val databaseOutput: DatabaseOutput,  // Dependemos da abstração
+    private val agenteBuilder: AgenteBuilder
+) : CorrecaoDeAtividadesInput {
 
-    override fun postEnriquecerCorrecao(prompt: String): String {
-        // Construir o requestBody usando GptRequestDto
-        val requestBody = GptRequestDto(
-            model = "gpt-4", // Ou "gpt-3.5-turbo" se preferir
-            messages = listOf(
-                MessageDto(
-                    role = "user",
-                    content = prompt
-                )
-            )
+    override fun corrigirAtividade(
+        atividadeId: Long,
+        alunoId: Long,
+        respostaDoAluno: RespostaBodyDto
+    ): CorrecaoResponse {
+        // Recuperar a atividade
+        val atividade = databaseOutput.findAtividadeById(atividadeId)
+            ?: throw NotFoundException("Atividade não encontrada com id $atividadeId")
+
+        // Recuperar o aluno
+        val aluno = databaseOutput.findAlunoById(alunoId)
+            ?: throw NotFoundException("Aluno não encontrado com id $alunoId")
+
+        // Recuperar o contexto padrão
+        val contexto = databaseOutput.findContextoPadrao()
+            ?: throw NotFoundException("Contexto não encontrado")
+
+        // Construir o modelo do agente (contexto + dados da atividade e aluno)
+        val agenteModel = AgenteModel(
+            aluno = aluno,
+            atividade = atividade,
+            contexto = contexto,
+            respostaDoAluno = respostaDoAluno.respostaAluno
         )
 
-        // Fazer a requisição à API do GPT
-        val responseEntity = requestGPT(requestBody).block()
+        // Montar o prompt do agente
+        val prompt = agenteBuilder.montarAgente(agenteModel)
 
-        val statusCode = responseEntity?.statusCode?.value() ?: 500
-        checkResponse(statusCode)
+        // Enviar o prompt para o GPT e obter a resposta
+        val respostaGpt = gptOutput.postEnriquecerCorrecao(prompt)
 
-        val responseBody = responseEntity?.body ?: ""
+        // Calcular o coeficiente de acertividade
+        val coeficienteAcertividade = calcularCoeficienteAcertividade(respostaGpt)
 
-        // Converter a resposta em GptResponseDto
-        val gptResponseDto = convertRespostaGPT(responseBody)
+        // Criar a entidade de resposta
+        val respostaEntity = RespostaEntity(
+            aluno = aluno,
+            atividade = atividade,
+            respostaAluno = respostaDoAluno.respostaAluno,
+            respostaCorrecao = respostaGpt,
+            coeficienteAcertividade = coeficienteAcertividade,
+            dataHoraResposta = LocalDateTime.now()
+        )
 
-        // Extrair o conteúdo da resposta do GPT
-        val respostaGpt = gptResponseDto.choices.firstOrNull()?.message?.content
-            ?: throw IllegalStateException("Resposta do GPT está vazia")
+        // Salvar a resposta no banco de dados
+        databaseOutput.saveResposta(respostaEntity)
 
-        return respostaGpt
+        // Retornar a resposta finalizada para o controller
+        return CorrecaoResponse.fromEntity(respostaEntity)
     }
 
-    private fun requestGPT(requestBody: GptRequestDto): Mono<ResponseEntity<String>> {
-        return webClientBuilder.build()
-            .post()
-            .uri("https://api.openai.com/v1/chat/completions")
-            .header("Authorization", "Bearer $apiKey")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(requestBody)
-            .exchangeToMono { response ->
-                response.toEntity(String::class.java)
-            }
+    private fun calcularCoeficienteAcertividade(respostaGpt: String): Double {
+        // Lógica de cálculo real (exemplo básico)
+        return 1.0 // Lógica placeholder
     }
 
-    private fun checkResponse(statusCode: Int) {
-        if (statusCode != HttpStatus.OK.value()) {
-            throw IllegalStateException("Erro ao chamar GPT: Status Code $statusCode")
-        }
+    // Função para recuperar todas as respostas de um aluno específico
+    override fun findRespostasByAlunoId(alunoId: Long): List<CorrecaoResponse> {
+        val respostas = databaseOutput.findRespostasByAlunoId(alunoId)
+        return respostas.map { CorrecaoResponse.fromEntity(it) }
     }
 
-    private fun convertRespostaGPT(responseBody: String): GptResponseDto {
-        return objectMapper.readValue(responseBody, GptResponseDto::class.java)
+    // Função para deletar todas as respostas associadas a uma atividade específica
+    override fun deleteRespostasByAtividadeId(atividadeId: Long) {
+        databaseOutput.deleteRespostasByAtividadeId(atividadeId)
     }
 }

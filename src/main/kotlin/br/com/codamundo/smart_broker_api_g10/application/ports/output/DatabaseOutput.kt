@@ -1,40 +1,51 @@
-package br.com.codamundo.smart_broker_api_g10.adapters.output.gateways
+package br.com.codamundo.smart_broker_api_g10.application.ports.output
 
 import br.com.codamundo.smart_broker_api_g10.infra.database.entities.*
-import java.util.*
 
 interface DatabaseOutput {
 
     // Métodos relacionados ao Aluno
-    fun findAlunoById(id: Long): Optional<AlunoEntity>   // Retorna Optional de AlunoEntity
-    fun saveAluno(aluno: AlunoEntity): AlunoEntity       // Salva e retorna o AlunoEntity
-    fun updateAluno(aluno: AlunoEntity): AlunoEntity     // Atualiza e retorna o AlunoEntity
+    fun findAlunoById(id: Long): AlunoEntity?
+    fun findAllAlunos(): List<AlunoEntity>  // Recuperar todos os Alunos
+    fun saveAluno(aluno: AlunoEntity): AlunoEntity
+    fun deleteAluno(id: Long)
 
     // Métodos relacionados à Atividade
-    fun findAtividadeById(id: Long): Optional<AtividadeEntity>   // Retorna Optional de AtividadeEntity
+    fun findAtividadeById(id: Long): AtividadeEntity?
+    fun findAllAtividades(): List<AtividadeEntity>  // Recuperar todas as Atividades
     fun saveAtividade(atividade: AtividadeEntity): AtividadeEntity
-    fun updateAtividade(atividade: AtividadeEntity): AtividadeEntity
+    fun deleteAtividade(id: Long)
 
     // Métodos relacionados ao Professor
-    fun findProfessorById(id: Long): Optional<ProfessorEntity>   // Retorna Optional de ProfessorEntity
+    fun findProfessorById(id: Long): ProfessorEntity?
+    fun findAllProfessores(): List<ProfessorEntity>  // Recuperar todos os Professores
     fun saveProfessor(professor: ProfessorEntity): ProfessorEntity
-    fun updateProfessor(professor: ProfessorEntity): ProfessorEntity
+    fun deleteProfessor(id: Long)
 
     // Métodos relacionados ao Contexto
-    fun findContextoById(id: Long): Optional<ContextoEntity>     // Retorna Optional de ContextoEntity
+    fun findContextoById(id: Long): ContextoEntity?
+    fun findAllContextos(): List<ContextoEntity>  // Recuperar todos os Contextos
+    fun findContextoPadrao(): ContextoEntity?
     fun saveContexto(contexto: ContextoEntity): ContextoEntity
-    fun updateContexto(contexto: ContextoEntity): ContextoEntity
+    fun deleteContexto(id: Long)
 
     // Métodos relacionados à Oficina
-    fun findOficinaById(id: Long): Optional<OficinaEntity>       // Retorna Optional de OficinaEntity
-    fun saveOficina(oficina: OficinaEntity): OficinaEntity       // Salva e retorna o OficinaEntity
+    fun findOficinaById(id: Long): OficinaEntity?
+    fun findAllOficinas(): List<OficinaEntity>  // Recuperar todas as Oficinas
+    fun saveOficina(oficina: OficinaEntity): OficinaEntity
+    fun deleteOficina(id: Long)
 
     // Métodos relacionados à Turma
-    fun findTurmaById(id: Long): Optional<TurmaEntity>           // Retorna Optional de TurmaEntity
-    fun saveTurma(turma: TurmaEntity): TurmaEntity               // Salva e retorna o TurmaEntity
+    fun findTurmaById(id: Long): TurmaEntity?
+    fun findAllTurmas(): List<TurmaEntity>  // Recuperar todas as Turmas
+    fun saveTurma(turma: TurmaEntity): TurmaEntity
+    fun deleteTurma(id: Long)
 
     // Métodos relacionados à Resposta
-    fun findRespostaById(id: Long): Optional<RespostaEntity>     // Retorna Optional de RespostaEntity
-    fun saveResposta(resposta: RespostaEntity): RespostaEntity   // Salva e retorna a RespostaEntity
+    fun findRespostaById(id: Long): RespostaEntity?    // Buscar todas as respostas de um aluno específico
+    fun findRespostasByAlunoId(alunoId: Long): List<RespostaEntity>    // Salvar uma resposta
+    fun saveResposta(resposta: RespostaEntity): RespostaEntity    // Deletar todas as respostas associadas a uma atividade específica
+    fun deleteRespostasByAtividadeId(atividadeId: Long)
+
+
 }
-a

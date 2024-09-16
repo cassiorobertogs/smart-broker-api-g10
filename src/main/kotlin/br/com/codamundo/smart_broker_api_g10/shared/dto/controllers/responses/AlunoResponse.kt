@@ -1,35 +1,35 @@
 package br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import br.com.codamundo.smart_broker_api_g10.infra.database.entities.AlunoEntity
 
 data class AlunoResponse(
-    @JsonProperty("id")
     val id: Long,
-
-    @JsonProperty("nome")
-    val nome: String,
-
-    @JsonProperty("idade")
-    val idade: Int,
-
-    @JsonProperty("turma")
-    val turma: String,
-
-    @JsonProperty("pessoa_com_deficiencia")
-    val pessoaComDeficiencia: Boolean,
-
-    @JsonProperty("estilo_aprendizagem")
+    val nome: String?,
+    val idade: Int?,
+    val turmaId: Long,
+    val pessoaComDeficiencia: Boolean?,
+    val tipoDeDeficiencia: String?,
     val estiloAprendizagem: String?,
-
-    @JsonProperty("interesses_hobbies")
     val interessesHobbies: String?,
-
-    @JsonProperty("passa_tempo_preferido")
     val passaTempoPreferido: String?,
-
-    @JsonProperty("filme_serie_preferido")
     val filmeSeriePreferido: String?,
-
-    @JsonProperty("artista")
     val artista: String?
-)
+) {
+    companion object {
+        fun fromEntity(alunoEntity: AlunoEntity): AlunoResponse {
+            return AlunoResponse(
+                id = alunoEntity.alunoId!!,
+                nome = alunoEntity.nome,
+                idade = alunoEntity.idade,
+                turmaId = alunoEntity.turma.idTurma!!,
+                pessoaComDeficiencia = alunoEntity.pessoaComDeficiencia,
+                tipoDeDeficiencia = alunoEntity.tipoDeDeficiencia,
+                estiloAprendizagem = alunoEntity.estiloAprendizagem,
+                interessesHobbies = alunoEntity.interessesHobbies,
+                passaTempoPreferido = alunoEntity.passaTempoPreferido,
+                filmeSeriePreferido = alunoEntity.filmeSeriePreferido,
+                artista = alunoEntity.artista
+            )
+        }
+    }
+}

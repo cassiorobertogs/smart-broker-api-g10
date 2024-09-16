@@ -1,39 +1,68 @@
-package br.com.codamundo.smart_broker_api_g10.adapters.output.gateways
+package br.com.codamundo.smart_broker_api_g10.application.usecases
 
-import br.com.codamundo.smart_broker_api_g10.infra.database.entities.*
+import br.com.codamundo.smart_broker_api_g10.application.ports.input.AlunoInput
+import br.com.codamundo.smart_broker_api_g10.application.ports.output.DatabaseOutput
+import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.AlunoResponse
+import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.AlunoRequestBodyDto
+import br.com.codamundo.smart_broker_api_g10.domain.exceptions.NotFoundException
+import br.com.codamundo.smart_broker_api_g10.infra.database.entities.AlunoEntity
 
-interface DatabaseOutput {
+class AlunoUseCase(private val databaseOutput: DatabaseOutput) : AlunoInput {
 
-    // Métodos relacionados ao Aluno
-    fun findAlunoById(id: Long): AlunoEntity?
-    fun saveAluno(aluno: AlunoEntity): AlunoEntity
-    fun updateAluno(aluno: AlunoEntity): AlunoEntity
+    override fun getAluno(id: Long): AlunoResponse {
+        val alunoEntity: AlunoEntity = databaseOutput.findAlunoById(id)
+            ?: throw NotFoundException("Aluno não encontrado com id $id")
+        return AlunoResponse.fromEntity(alunoEntity)
+    }
 
-    // Métodos relacionados à Atividade
-    fun findAtividadeById(id: Long): AtividadeEntity?
-    fun saveAtividade(atividade: AtividadeEntity): AtividadeEntity
-    fun updateAtividade(atividade: AtividadeEntity): AtividadeEntity
+    override fun getAllAlunos(): List<AlunoResponse> {
+        val alunos = databaseOutput.findAllAlunos()
+        return alunos.map { AlunoResponse.fromEntity(it) }
+    }
 
-    // Métodos relacionados ao Professor
-    fun findProfessorById(id: Long): ProfessorEntity?
-    fun saveProfessor(professor: ProfessorEntity): ProfessorEntity
-    fun updateProfessor(professor: ProfessorEntity): ProfessorEntity
+    override fun createAluno(alunoDto: AlunoRequestBodyDto): AlunoResponse {
+        val turma = databaseOutput.findTurmaById(alunoDto.idTurma)
+            ?: throw NotFoundException("Turma não encontrada com id ${alunoDto.idTurma}")
 
-    // Métodos relacionados ao Contexto
-    fun findContextoById(id: Long): ContextoEntity?
-    fun findContextoPadrao(): ContextoEntity?
-    fun saveContexto(contexto: ContextoEntity): ContextoEntity
-    fun updateContexto(contexto: ContextoEntity): ContextoEntity
+        val alunoEntity = AlunoEntity(
+            turma = turma,
+            nome = alunoDto.nome,
+            idade = alunoDto.idade,
+            pessoaComDeficiencia = alunoDto.pessoaComDeficiencia,
+            estiloAprendizagem = alunoDto.estiloAprendizagem,
+            interessesHobbies = alunoDto.interessesHobbies,
+            passaTempoPreferido = alunoDto.passaTempoPreferido,
+            filmeSeriePreferido = alunoDto.filmeSeriePreferido,
+            artista = alunoDto.artista
+        )
+        val savedAluno = databaseOutput.saveAluno(alunoEntity)
+        return AlunoResponse.fromEntity(savedAluno)
+    }
 
-    // Métodos relacionados à Oficina
-    fun findOficinaById(id: Long): OficinaEntity?
-    fun saveOficina(oficina: OficinaEntity): OficinaEntity
+    override fun updateAluno(id: Long, alunoDto: AlunoRequestBodyDto) {
+        val alunoExistente = databaseOutput.findAlunoById(id)
+            ?: throw NotFoundException("Aluno não encontrado com id $id")
 
-    // Métodos relacionados à Turma
-    fun findTurmaById(id: Long): TurmaEntity?
-    fun saveTurma(turma: TurmaEntity): TurmaEntity
+        val turma = databaseOutput.findTurmaById(alunoDto.idTurma)
+            ?: throw NotFoundException("Turma não encontrada com id ${alunoDto.idTurma}")
 
-    // Métodos relacionados à Resposta
-    fun findRespostaById(id: Long): RespostaEntity?
-    fun saveResposta(resposta: RespostaEntity): RespostaEntity
+        val updatedAluno = alunoExistente.copy(
+            turma = turma,
+            nome = alunoDto.nome ?: alunoExistente.nome,
+            idade = alunoDto.idade ?: alunoExistente.idade,
+            pessoaComDeficiencia = alunoDto.pessoaComDeficiencia ?: alunoExistente.pessoaComDeficiencia,
+            estiloAprendizagem = alunoDto.estiloAprendizagem ?: alunoExistente.estiloAprendizagem,
+            interessesHobbies = alunoDto.interessesHobbies ?: alunoExistente.interessesHobbies,
+            passaTempoPreferido = alunoDto.passaTempoPreferido ?: alunoExistente.passaTempoPreferido,
+            filmeSeriePreferido = alunoDto.filmeSeriePreferido ?: alunoExistente.filmeSeriePreferido,
+            artista = alunoDto.artista ?: alunoExistente.artista
+        )
+        databaseOutput.saveAluno(updatedAluno)
+    }
+
+    override fun deleteAluno(id: Long) {
+        val alunoExistente = databaseOutput.findAlunoById(id)
+            ?: throw NotFoundException("Aluno não encontrado com id $id")
+        databaseOutput.deleteAluno(id)
+    }
 }

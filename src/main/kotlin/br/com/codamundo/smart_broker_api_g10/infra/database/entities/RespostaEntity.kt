@@ -4,7 +4,7 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "Iresposta")
+@Table(name = "resposta")
 data class RespostaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,15 +19,15 @@ data class RespostaEntity(
     @JoinColumn(name = "atividade_id", nullable = false)
     val atividade: AtividadeEntity,
 
-    @Column(name = "resposta_aluno", nullable = false, columnDefinition = "TEXT")
-    val respostaAluno: String,
+    @Column(name = "resposta_aluno", columnDefinition = "TEXT")
+    val respostaAluno: String? = null,
 
-    @Column(name = "resposta_correcao", nullable = false, columnDefinition = "TEXT")
-    val respostaCorrecao: String,
+    @Column(name = "resposta_correcao", columnDefinition = "TEXT")
+    val respostaCorrecao: String? = null,
 
-    @Column(name = "coeficiente_acertividade", nullable = false)
-    val coeficienteAcertividade: Double,
+    @Column(name = "coeficiente_acertividade")
+    val coeficienteAcertividade: Double? = null,
 
-    @Column(name = "data_hora_resposta", nullable = false, updatable = false)
-    val dataHoraResposta: LocalDateTime = LocalDateTime.now()
+    @Column(name = "data_hora_resposta", updatable = false)
+    val dataHoraResposta: LocalDateTime? = LocalDateTime.now()
 )

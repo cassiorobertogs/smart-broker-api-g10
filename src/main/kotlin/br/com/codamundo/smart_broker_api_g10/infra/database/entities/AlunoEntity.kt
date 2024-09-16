@@ -1,10 +1,6 @@
 package br.com.codamundo.smart_broker_api_g10.infra.database.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Column
+import jakarta.persistence.*
 
 @Entity
 data class AlunoEntity(
@@ -13,36 +9,34 @@ data class AlunoEntity(
     @Column(name = "aluno_id")
     val alunoId: Long? = null,
 
-    @Column(nullable = false)
-    val nome: String,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "turma_id", nullable = false)
+    val turma: TurmaEntity,
 
-    @Column(nullable = false)
-    val idade: Int,
+    @Column
+    val nome: String? = null,
 
-    @Column(name = "oficina_cadastrada", nullable = false)
-    val oficinaCadastrada: String,
+    @Column
+    val idade: Int? = null,
 
-    @Column(nullable = false)
-    val turma: String,
+    @Column(name = "pessoa_com_deficiencia")
+    val pessoaComDeficiencia: Boolean? = false,
 
-    @Column(name = "pessoa_com_deficiencia", nullable = true)
-    val pessoaComDeficiencia: Boolean?,
-
-    @Column(name = "tipod_de_deficiencia", nullable = true)
-    val tipodDeficiencia: String?,
+    @Column(name = "tipo_de_deficiencia")
+    val tipoDeDeficiencia: String? = null,
 
     @Column(name = "estilo_aprendizagem")
-    val estiloAprendizagem: String,
+    val estiloAprendizagem: String? = null,
 
     @Column(name = "interesses_hobbies")
-    val interessesHobbies: String,
+    val interessesHobbies: String? = null,
 
     @Column(name = "passa_tempo_preferido")
-    val passaTempoPreferido: String,
+    val passaTempoPreferido: String? = null,
 
     @Column(name = "filme_serie_preferido")
-    val filmeSeriePreferido: String,
+    val filmeSeriePreferido: String? = null,
 
-    @Column(nullable = false)
-    val artista: String
+    @Column
+    val artista: String? = null
 )

@@ -21,6 +21,15 @@ class AtividadeController(private val atividadeInput: AtividadeInput) {
         return ResponseEntity.ok(atividade)
     }
 
+    @GetMapping
+    fun getAllAtividades(
+        @RequestHeader("Authorization") authorization: String,
+        @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
+    ): ResponseEntity<List<AtividadeResponse>> {
+        val atividades = atividadeInput.getAllAtividades()
+        return ResponseEntity.ok(atividades)
+    }
+
     @PostMapping
     fun createAtividade(
         @RequestHeader("Authorization") authorization: String,
@@ -39,6 +48,16 @@ class AtividadeController(private val atividadeInput: AtividadeInput) {
         @RequestBody @Validated atividadeRequestBodyDto: AtividadeRequestBodyDto
     ): ResponseEntity<Void> {
         atividadeInput.updateAtividade(id, atividadeRequestBodyDto)
+        return ResponseEntity.noContent().build()
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteAtividade(
+        @PathVariable id: Long,
+        @RequestHeader("Authorization") authorization: String,
+        @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
+    ): ResponseEntity<Void> {
+        atividadeInput.deleteAtividade(id)
         return ResponseEntity.noContent().build()
     }
 }

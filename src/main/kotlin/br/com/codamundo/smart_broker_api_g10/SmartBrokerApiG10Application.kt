@@ -9,4 +9,3 @@ class SmartBrokerApiG10Application
 fun main(args: Array<String>) {
 	runApplication<SmartBrokerApiG10Application>(*args)
 }
-I

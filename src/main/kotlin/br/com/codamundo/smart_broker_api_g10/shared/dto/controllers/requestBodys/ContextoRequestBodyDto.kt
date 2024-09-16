@@ -1,12 +1,12 @@
-package br.com.codamundo.smart_broker_api_g10.shared.dto
+package br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class  ContextoRequestBodyDto(
+data class ContextoRequestBodyDto(
+
     @JsonProperty("prompt")
     val prompt: String,
 
     @JsonProperty("coeficiente_didatico")
     val coeficienteDidatico: Double
 )
-

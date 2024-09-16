@@ -1,23 +1,27 @@
 package br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import br.com.codamundo.smart_broker_api_g10.infra.database.entities.AtividadeEntity
 
 data class AtividadeResponse(
-    @JsonProperty("id")
     val id: Long,
-
-    @JsonProperty("enunciado")
-    val enunciado: String,
-
-    @JsonProperty("resposta_esperada")
-    val respostaEsperada: String,
-
-    @JsonProperty("area_conhecimento")
-    val areaConhecimento: String,
-
-    @JsonProperty("nivel_dificuldade")
-    val nivelDificuldade: String,
-
-    @JsonProperty("objetivos_aprendizagem")
-    val objetivosAprendizagem: String
-)
+    val oficinaId: Long,
+    val enunciado: String?,
+    val respostaEsperada: String?,
+    val areaConhecimento: String?,
+    val nivelDificuldade: String?,
+    val objetivosAprendizagem: String?
+) {
+    companion object {
+        fun fromEntity(atividadeEntity: AtividadeEntity): AtividadeResponse {
+            return AtividadeResponse(
+                id = atividadeEntity.atividadeId!!,
+                oficinaId = atividadeEntity.oficina.oficinaId!!,
+                enunciado = atividadeEntity.enunciado,
+                respostaEsperada = atividadeEntity.respostaEsperada,
+                areaConhecimento = atividadeEntity.areaConhecimento,
+                nivelDificuldade = atividadeEntity.nivelDificuldade,
+                objetivosAprendizagem = atividadeEntity.objetivosAprendizagem
+            )
+        }
+    }
+}
