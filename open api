@@ -1,0 +1,351 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Smart Broker API",
+    "version": "1.0.0",
+    "description": "API para gerenciamento de Alunos, Atividades, Contextos, Correção de Atividades e Professores."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Servidor local"
+    }
+  ],
+  "paths": {
+    "/api/alunos": {
+      "get": {
+        "summary": "Listar todos os alunos",
+        "operationId": "getAllAlunos",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Token de autorização",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de alunos retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AlunoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar novo aluno",
+        "operationId": "createAluno",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Token de autorização",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": false,
+            "description": "ID opcional para rastreamento da requisição",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dados do novo aluno",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlunoRequestBodyDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Aluno criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlunoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          }
+        }
+      }
+    },
+    "/api/alunos/{id}": {
+      "get": {
+        "summary": "Obter aluno por ID",
+        "operationId": "getAlunoById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do aluno",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Token de autorização",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": false,
+            "description": "ID opcional para rastreamento da requisição",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aluno retornado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlunoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "404": {
+            "description": "Aluno não encontrado"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Atualizar aluno por ID",
+        "operationId": "updateAlunoById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do aluno",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Token de autorização",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": false,
+            "description": "ID opcional para rastreamento da requisição",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dados para atualização do aluno",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlunoRequestBodyDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Aluno atualizado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "404": {
+            "description": "Aluno não encontrado"
+          }
+        }
+      }
+    },
+    "/atividades": {
+      "get": {
+        "summary": "Listar todas as atividades",
+        "operationId": "getAllAtividades",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Token de autorização",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de atividades retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AtividadeResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar nova atividade",
+        "operationId": "createAtividade",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Token de autorização",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": false,
+            "description": "ID opcional para rastreamento da requisição",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Dados da nova atividade",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtividadeRequestBodyDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Atividade criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AtividadeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          }
+        }
+      }
+    },
+    "/atividades/{id}": {
+      "get": {
+        "summary": "Obter atividade por ID",
+        "operationId": "getAtividadeById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da atividade",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Token de autorização",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-Request-ID",
+            "in": "header",
+            "required": false,
+            "description": "ID opcional para rastreamento da requisição",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Atividade retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AtividadeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "404": {
+            "description": "Atividade não encontrada"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Atualizar atividade por ID",
+        "operationId": "updateAtividadeById",
+        "parameters":
