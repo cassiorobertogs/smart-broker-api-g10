@@ -1,8 +1,33 @@
-# Smart Broker API G10
 
-## Descrição
+# 🎓 Smart Broker API - Correção de Atividades Personalizada no Programa Coda Mundo
 
-A `Smart Broker API G10` é uma API desenvolvida em Kotlin e Java utilizando o framework Spring Boot. Esta API é projetada para gerenciar entidades como Aluno, Atividade, Professor e Contexto, além de se comunicar com a API do ChatGPT para enriquecer correções.
+A **Smart Broker API** é uma peça fundamental do programa **Coda Mundo** da ZUP, que oferece letramento digital e em programação para alunos de escolas públicas no Brasil. Esta API foi projetada para apoiar professores e alunos no processo de correção de atividades dentro das oficinas de letramento digital, fornecendo feedback personalizado e adaptado ao perfil de cada estudante.
+
+Utilizando inteligência artificial, a API avalia as respostas dos alunos com base em suas características pessoais e nas atividades que eles submetem. O objetivo é oferecer um feedback detalhado e didático, alinhado às competências do programa, como o letramento digital, o pensamento computacional e a lógica de programação. A correção vai além do simples "certo" ou "errado", gerando um retorno que auxilia o aluno a aprimorar suas habilidades, sempre de maneira crítica e adaptada às suas necessidades educacionais.
+
+### Correção de Atividades
+O endpoint de correção de atividades é o coração da API, onde todo o poder da IA é aplicado para avaliar as respostas dos alunos. As informações pessoais dos alunos, juntamente com as características didáticas das atividades, são usadas para gerar um feedback construtivo e detalhado.
+
+## 📑 Recursos e Métodos Disponíveis
+
+| Recurso        | Método                        | Descrição                                  |
+|----------------|-------------------------------|--------------------------------------------|
+| **Aluno**      | `GET /alunos/{id}`             | Retorna os dados de um aluno específico    |
+|                | `POST /alunos`                | Cria um novo aluno                        |
+|                | `PATCH /alunos/{id}`          | Atualiza os dados de um aluno              |
+|                | `DELETE /alunos/{id}`         | Deleta os dados de um aluno                |
+| **Professor**  | `GET /professores/{id}`        | Retorna os dados de um professor específico|
+|                | `POST /professores`           | Cria um novo professor                     |
+|                | `PATCH /professores/{id}`     | Atualiza os dados de um professor          |
+|                | `DELETE /professores/{id}`    | Deleta os dados de um professor            |
+| **Atividade**  | `GET /atividades/{id}`         | Retorna os dados de uma atividade específica|
+|                | `POST /atividades`            | Cria uma nova atividade                    |
+|                | `PATCH /atividades/{id}`      | Atualiza os dados de uma atividade         |
+|                | `DELETE /atividades/{id}`     | Deleta os dados de uma atividade           |
+| **Contexto**   | `GET /contextos/{id}`          | Retorna os dados de um contexto específico |
+|                | `POST /contextos`             | Cria um novo contexto                      |
+|                | `PATCH /contextos/{id}`       | Atualiza os dados de um contexto           |
+|                | `DELETE /contextos/{id}`      | Deleta os dados de um contexto             |
 
 ## Estrutura do Projeto
 
@@ -94,6 +119,62 @@ smart_broker_api_g10
 ## Banco de Dados
 
 ### Diagrama Entidade-Relacionamento (ER)
+
+O diagrama representa um modelo de banco de dados, com várias entidades conectadas por relações entre elas. Cada entidade contém atributos que definem suas características. Abaixo estão as entidades e seus respectivos atributos, seguidos pelos relacionamentos entre elas:
+
+Entidades e seus atributos:
+ALUNO:
+
+id (Long): Identificador único do aluno.
+nome (String): Nome do aluno.
+idade (Integer): Idade do aluno.
+oficinaCadastrada (String): Oficina na qual o aluno está inscrito.
+turma (String): Turma do aluno.
+pessoaComDeficiencia (Boolean): Indica se o aluno possui alguma deficiência.
+estiloAprendizagem (String): Estilo de aprendizagem do aluno.
+interessesHobbies (String): Interesses e hobbies do aluno.
+passaTempoPreferido (String): Atividades preferidas no tempo livre.
+filmeSeriePreferido (String): Filme ou série favorita.
+artista (String): Artista favorito.
+ATIVIDADE:
+
+id (Long): Identificador único da atividade.
+enunciado (String): Enunciado da atividade.
+respostaEsperada (String): Resposta esperada para a atividade.
+areaConhecimento (String): Área do conhecimento a que a atividade pertence.
+nivelDificuldade (String): Nível de dificuldade da atividade.
+objetivosAprendizagem (String): Objetivos de aprendizagem da atividade.
+PROFESSOR:
+
+id (Long): Identificador único do professor.
+nome (String): Nome do professor.
+especialidade (String): Especialidade do professor.
+CONTEXTO:
+
+id (Long): Identificador único do contexto.
+prompt (String): Prompt que guia a atividade.
+coeficienteDidatico (Double): Coeficiente didático usado para gerar feedback personalizado.
+OFICINA:
+
+id (Long): Identificador único da oficina.
+escola (String): Nome da escola onde a oficina é realizada.
+TURMA:
+
+id (Long): Identificador único da turma.
+quantidadeAlunos (Integer): Quantidade de alunos na turma.
+RESPOSTA:
+
+id (Long): Identificador único da resposta do aluno.
+respostaAluno (String): Resposta dada pelo aluno.
+coeficienteAcertividade (Double): Avaliação da precisão da resposta.
+dataHoraResposta (LocalDateTime): Data e hora da resposta.
+Relacionamentos:
+ALUNO está associado a uma TURMA.
+TURMA pode realizar várias ATIVIDADES.
+Um PROFESSOR cria uma ATIVIDADE.
+Cada ATIVIDADE está associada a um CONTEXTO.
+ATIVIDADE está ligada a uma ou mais RESPOSTAS dos alunos.
+Uma TURMA pertence a uma OFICINA.
 
 ```mermaid
 graph LR;
