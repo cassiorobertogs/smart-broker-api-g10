@@ -14,7 +14,7 @@ class ContextoController(private val contextoInput: ContextoInput) {
     @GetMapping("/{id}")
     fun getContexto(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<ContextoResponse> {
         val contexto = contextoInput.getContexto(id)
@@ -23,7 +23,7 @@ class ContextoController(private val contextoInput: ContextoInput) {
 
     @PostMapping
     fun createContexto(
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
         @RequestBody @Validated contextoRequestBodyDto: ContextoRequestBodyDto
     ): ResponseEntity<ContextoResponse> {
@@ -34,7 +34,7 @@ class ContextoController(private val contextoInput: ContextoInput) {
     @PatchMapping("/{id}")
     fun updateContexto(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
         @RequestBody @Validated contextoRequestBodyDto: ContextoRequestBodyDto
     ): ResponseEntity<Void> {
@@ -44,7 +44,7 @@ class ContextoController(private val contextoInput: ContextoInput) {
 
     @GetMapping
     fun getAllContextos(
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<List<ContextoResponse>> {
         val contextos = contextoInput.getAllContextos()
@@ -55,7 +55,7 @@ class ContextoController(private val contextoInput: ContextoInput) {
     @DeleteMapping("/{id}")
     fun deleteContexto(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<Void> {
         contextoInput.deleteContexto(id)

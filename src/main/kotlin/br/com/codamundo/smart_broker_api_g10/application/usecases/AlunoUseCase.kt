@@ -6,7 +6,9 @@ import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.Al
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.AlunoRequestBodyDto
 import br.com.codamundo.smart_broker_api_g10.domain.exceptions.NotFoundException
 import br.com.codamundo.smart_broker_api_g10.infra.database.entities.AlunoEntity
+import org.springframework.stereotype.Service
 
+@Service
 class AlunoUseCase(private val databaseOutput: DatabaseOutput) : AlunoInput {
 
     override fun getAluno(id: Long): AlunoResponse {

@@ -9,7 +9,7 @@ data class ContextoEntity(
     @Column(name = "id_contexto")
     val idContexto: Long? = null,
 
-    @Column
+    @Column(name = "prompt")
     val prompt: String? = null,
 
     @Column(name = "coeficiente_didatico")

@@ -14,7 +14,7 @@ class AtividadeController(private val atividadeInput: AtividadeInput) {
     @GetMapping("/{id}")
     fun getAtividade(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<AtividadeResponse> {
         val atividade = atividadeInput.getAtividade(id)
@@ -23,7 +23,7 @@ class AtividadeController(private val atividadeInput: AtividadeInput) {
 
     @GetMapping
     fun getAllAtividades(
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<List<AtividadeResponse>> {
         val atividades = atividadeInput.getAllAtividades()
@@ -32,7 +32,7 @@ class AtividadeController(private val atividadeInput: AtividadeInput) {
 
     @PostMapping
     fun createAtividade(
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
         @RequestBody @Validated atividadeRequestBodyDto: AtividadeRequestBodyDto
     ): ResponseEntity<AtividadeResponse> {
@@ -43,7 +43,7 @@ class AtividadeController(private val atividadeInput: AtividadeInput) {
     @PatchMapping("/{id}")
     fun updateAtividade(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
         @RequestBody @Validated atividadeRequestBodyDto: AtividadeRequestBodyDto
     ): ResponseEntity<Void> {
@@ -54,7 +54,7 @@ class AtividadeController(private val atividadeInput: AtividadeInput) {
     @DeleteMapping("/{id}")
     fun deleteAtividade(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<Void> {
         atividadeInput.deleteAtividade(id)

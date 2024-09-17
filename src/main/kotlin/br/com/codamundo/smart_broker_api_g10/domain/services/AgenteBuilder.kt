@@ -1,7 +1,9 @@
 package br.com.codamundo.smart_broker_api_g10.domain.services
 
 import br.com.codamundo.smart_broker_api_g10.domain.models.AgenteModel
+import org.springframework.stereotype.Service
 
+@Service
 class AgenteBuilder {
 
     fun montarAgente(agenteModel: AgenteModel): String {

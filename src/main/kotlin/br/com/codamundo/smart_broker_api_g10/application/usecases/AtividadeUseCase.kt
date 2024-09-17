@@ -6,7 +6,9 @@ import br.com.codamundo.smart_broker_api_g10.domain.exceptions.NotFoundException
 import br.com.codamundo.smart_broker_api_g10.infra.database.entities.AtividadeEntity
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.AtividadeRequestBodyDto
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.AtividadeResponse
+import org.springframework.stereotype.Service
 
+@Service
 class AtividadeUseCase(private val databaseOutput: DatabaseOutput) : AtividadeInput {
 
     override fun getAtividade(id: Long): AtividadeResponse {

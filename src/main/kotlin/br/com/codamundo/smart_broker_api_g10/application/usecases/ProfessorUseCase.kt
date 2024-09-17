@@ -6,7 +6,9 @@ import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.Pr
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.ProfessorRequestBodyDto
 import br.com.codamundo.smart_broker_api_g10.domain.exceptions.NotFoundException
 import br.com.codamundo.smart_broker_api_g10.infra.database.entities.ProfessorEntity
+import org.springframework.stereotype.Service
 
+@Service
 class ProfessorUseCase(private val databaseOutput: DatabaseOutput) : ProfessorInput {
 
     override fun getProfessor(id: Long): ProfessorResponse {

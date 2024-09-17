@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository
 interface RespostaRepository : JpaRepository<RespostaEntity, Long> {
 
     // Buscar todas as respostas de um aluno específico
-    fun findByAlunoId(alunoId: Long): List<RespostaEntity>
+    fun findByAluno_AlunoId(alunoId: Long): List<RespostaEntity>
 
     // Buscar todas as respostas associadas a uma atividade específica
-    fun findByAtividadeId(atividadeId: Long): List<RespostaEntity>
-
+    fun findByAtividade_AtividadeId(atividadeId: Long): List<RespostaEntity>
 }

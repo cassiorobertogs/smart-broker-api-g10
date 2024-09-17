@@ -6,7 +6,9 @@ import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.Co
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.ContextoRequestBodyDto
 import br.com.codamundo.smart_broker_api_g10.domain.exceptions.NotFoundException
 import br.com.codamundo.smart_broker_api_g10.infra.database.entities.ContextoEntity
+import org.springframework.stereotype.Service
 
+@Service
 class ContextoUseCase(private val databaseOutput: DatabaseOutput) : ContextoInput {
 
     override fun getContexto(id: Long): ContextoResponse {

@@ -280,7 +280,7 @@ class DatabaseGatewayImpl(
     // Métodos relacionados à Resposta
     override fun findRespostasByAlunoId(alunoId: Long): List<RespostaEntity> {
         return try {
-            val respostas = respostaRepository.findByAlunoId(alunoId)
+            val respostas = respostaRepository.findByAluno_AlunoId(alunoId)
             if (respostas.isEmpty()) {
                 logger.warn("Nenhuma resposta encontrada para o aluno com id $alunoId.")
             }
@@ -311,7 +311,7 @@ class DatabaseGatewayImpl(
 
     override fun deleteRespostasByAtividadeId(atividadeId: Long) {
         try {
-            val respostas = respostaRepository.findByAtividadeId(atividadeId)
+            val respostas = respostaRepository.findByAtividade_AtividadeId(atividadeId)
             if (respostas.isEmpty()) {
                 logger.warn("Nenhuma resposta encontrada para a atividade com id $atividadeId para exclusão.")
                 throw NotFoundException("Nenhuma resposta encontrada para a atividade com id $atividadeId.")
@@ -322,5 +322,4 @@ class DatabaseGatewayImpl(
             throw DatabaseException("Erro ao deletar as respostas da atividade com id $atividadeId.", e)
         }
     }
-
 }
