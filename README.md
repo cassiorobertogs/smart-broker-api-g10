@@ -1,8 +1,33 @@
-# Smart Broker API G10
 
-## Descrição
+# 🎓 Smart Broker API - Correção de Atividades Personalizada no Programa Coda Mundo
 
-A `Smart Broker API G10` é uma API desenvolvida em Kotlin e Java utilizando o framework Spring Boot. Esta API é projetada para gerenciar entidades como Aluno, Atividade, Professor e Contexto, além de se comunicar com a API do ChatGPT para enriquecer correções.
+A **Smart Broker API** é uma peça fundamental do programa **Coda Mundo** da ZUP, que oferece letramento digital e em programação para alunos de escolas públicas no Brasil. Esta API foi projetada para apoiar professores e alunos no processo de correção de atividades dentro das oficinas de letramento digital, fornecendo feedback personalizado e adaptado ao perfil de cada estudante.
+
+Utilizando inteligência artificial, a API avalia as respostas dos alunos com base em suas características pessoais e nas atividades que eles submetem. O objetivo é oferecer um feedback detalhado e didático, alinhado às competências do programa, como o letramento digital, o pensamento computacional e a lógica de programação. A correção vai além do simples "certo" ou "errado", gerando um retorno que auxilia o aluno a aprimorar suas habilidades, sempre de maneira crítica e adaptada às suas necessidades educacionais.
+
+### Correção de Atividades
+O endpoint de correção de atividades é o coração da API, onde todo o poder da IA é aplicado para avaliar as respostas dos alunos. As informações pessoais dos alunos, juntamente com as características didáticas das atividades, são usadas para gerar um feedback construtivo e detalhado.
+
+## 📑 Recursos e Métodos Disponíveis
+
+| Recurso        | Método                        | Descrição                                  |
+|----------------|-------------------------------|--------------------------------------------|
+| **Aluno**      | `GET /alunos/{id}`             | Retorna os dados de um aluno específico    |
+|                | `POST /alunos`                | Cria um novo aluno                        |
+|                | `PATCH /alunos/{id}`          | Atualiza os dados de um aluno              |
+|                | `DELETE /alunos/{id}`         | Deleta os dados de um aluno                |
+| **Professor**  | `GET /professores/{id}`        | Retorna os dados de um professor específico|
+|                | `POST /professores`           | Cria um novo professor                     |
+|                | `PATCH /professores/{id}`     | Atualiza os dados de um professor          |
+|                | `DELETE /professores/{id}`    | Deleta os dados de um professor            |
+| **Atividade**  | `GET /atividades/{id}`         | Retorna os dados de uma atividade específica|
+|                | `POST /atividades`            | Cria uma nova atividade                    |
+|                | `PATCH /atividades/{id}`      | Atualiza os dados de uma atividade         |
+|                | `DELETE /atividades/{id}`     | Deleta os dados de uma atividade           |
+| **Contexto**   | `GET /contextos/{id}`          | Retorna os dados de um contexto específico |
+|                | `POST /contextos`             | Cria um novo contexto                      |
+|                | `PATCH /contextos/{id}`       | Atualiza os dados de um contexto           |
+|                | `DELETE /contextos/{id}`      | Deleta os dados de um contexto             |
 
 ## Estrutura do Projeto
 
