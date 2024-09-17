@@ -13,7 +13,7 @@ data class CorrecaoResponse(
     companion object {
         fun fromEntity(respostaEntity: RespostaEntity): CorrecaoResponse {
             return CorrecaoResponse(
-                id = respostaEntity.idResposta!!,
+                id = respostaEntity.idResposta ?: 1,
                 respostaAluno = respostaEntity.respostaAluno,
                 respostaCorrecao = respostaEntity.respostaCorrecao,
                 coeficienteAcertividade = respostaEntity.coeficienteAcertividade,

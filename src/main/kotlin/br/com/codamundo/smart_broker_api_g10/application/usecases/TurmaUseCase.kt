@@ -6,7 +6,9 @@ import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.Tu
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.TurmaRequest
 import br.com.codamundo.smart_broker_api_g10.domain.exceptions.NotFoundException
 import br.com.codamundo.smart_broker_api_g10.infra.database.entities.TurmaEntity
+import org.springframework.stereotype.Service
 
+@Service
 class TurmaUseCase(
     private val databaseOutput: DatabaseOutput
 ) : TurmaInput {

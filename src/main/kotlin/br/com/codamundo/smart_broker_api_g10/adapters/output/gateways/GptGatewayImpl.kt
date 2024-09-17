@@ -22,9 +22,8 @@ class GptGatewayImpl(
 ) : GptOutput {
 
     override fun postEnriquecerCorrecao(prompt: String): String {
-        // Construir o requestBody usando GptRequestDto
-        val requestBody = GptRequestDto(
-            model = "gpt-4", // Ou "gpt-3.5-turbo" se preferir
+        val requestBody: GptRequestDto = GptRequestDto(
+            model = "gpt-4o-mini",
             messages = listOf(
                 MessageDto(
                     role = "user",
@@ -33,7 +32,6 @@ class GptGatewayImpl(
             )
         )
 
-        // Fazer a requisição à API do GPT
         val responseEntity = requestGPT(requestBody).block()
 
         val statusCode = responseEntity?.statusCode?.value() ?: 500

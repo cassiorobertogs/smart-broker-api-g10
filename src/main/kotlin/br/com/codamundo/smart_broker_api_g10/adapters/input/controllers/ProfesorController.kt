@@ -14,7 +14,6 @@ class ProfessorController(private val professorInput: ProfessorInput) {
     @GetMapping("/{id}")
     fun getProfessor(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<ProfessorResponse> {
         val professor = professorInput.getProfessor(id)
@@ -23,7 +22,6 @@ class ProfessorController(private val professorInput: ProfessorInput) {
 
     @GetMapping
     fun getAllProfessores(
-        @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<List<ProfessorResponse>> {
         val professores = professorInput.getAllProfessores()
@@ -32,7 +30,6 @@ class ProfessorController(private val professorInput: ProfessorInput) {
 
     @PostMapping
     fun createProfessor(
-        @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
         @RequestBody @Validated professorRequestBodyDto: ProfessorRequestBodyDto
     ): ResponseEntity<ProfessorResponse> {
@@ -43,7 +40,6 @@ class ProfessorController(private val professorInput: ProfessorInput) {
     @PatchMapping("/{id}")
     fun updateProfessor(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
         @RequestBody @Validated professorRequestBodyDto: ProfessorRequestBodyDto
     ): ResponseEntity<Void> {
@@ -54,7 +50,6 @@ class ProfessorController(private val professorInput: ProfessorInput) {
     @DeleteMapping("/{id}")
     fun deleteProfessor(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<Void> {
         professorInput.deleteProfessor(id)

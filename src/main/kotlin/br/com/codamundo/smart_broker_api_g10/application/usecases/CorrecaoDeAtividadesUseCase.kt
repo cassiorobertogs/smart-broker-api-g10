@@ -9,11 +9,13 @@ import br.com.codamundo.smart_broker_api_g10.infra.database.entities.RespostaEnt
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.RespostaBodyDto
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.CorrecaoResponse
 import br.com.codamundo.smart_broker_api_g10.domain.services.AgenteBuilder
+import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
+@Service
 class CorrecaoDeAtividadesUseCase(
-    private val gptOutput: GptOutput,  // Agora dependemos da interface
-    private val databaseOutput: DatabaseOutput,  // Dependemos da abstração
+    private val gptOutput: GptOutput,
+    private val databaseOutput: DatabaseOutput,
     private val agenteBuilder: AgenteBuilder
 ) : CorrecaoDeAtividadesInput {
 
@@ -52,7 +54,7 @@ class CorrecaoDeAtividadesUseCase(
         val coeficienteAcertividade = calcularCoeficienteAcertividade(respostaGpt)
 
         // Criar a entidade de resposta
-        val respostaEntity = RespostaEntity(
+        val respostaEntity: RespostaEntity = RespostaEntity(
             aluno = aluno,
             atividade = atividade,
             respostaAluno = respostaDoAluno.respostaAluno,
@@ -62,7 +64,7 @@ class CorrecaoDeAtividadesUseCase(
         )
 
         // Salvar a resposta no banco de dados
-        databaseOutput.saveResposta(respostaEntity)
+        //databaseOutput.saveResposta(respostaEntity)
 
         // Retornar a resposta finalizada para o controller
         return CorrecaoResponse.fromEntity(respostaEntity)

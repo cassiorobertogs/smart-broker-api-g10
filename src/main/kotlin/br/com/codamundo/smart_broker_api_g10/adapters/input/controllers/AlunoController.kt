@@ -14,7 +14,7 @@ class AlunoController(private val alunoInput: AlunoInput) {
     @GetMapping("/{id}")
     fun getAluno(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<AlunoResponse> {
         val aluno = alunoInput.getAluno(id)
@@ -23,7 +23,7 @@ class AlunoController(private val alunoInput: AlunoInput) {
 
     @GetMapping
     fun getAllAlunos(
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<List<AlunoResponse>> {
         val alunos = alunoInput.getAllAlunos()
@@ -32,7 +32,7 @@ class AlunoController(private val alunoInput: AlunoInput) {
 
     @PostMapping
     fun createAluno(
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
         @RequestBody @Validated alunoRequestBodyDto: AlunoRequestBodyDto
     ): ResponseEntity<AlunoResponse> {
@@ -43,7 +43,7 @@ class AlunoController(private val alunoInput: AlunoInput) {
     @PatchMapping("/{id}")
     fun updateAluno(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
         @RequestBody @Validated alunoRequest: AlunoRequestBodyDto
     ): ResponseEntity<Void> {
@@ -54,7 +54,7 @@ class AlunoController(private val alunoInput: AlunoInput) {
     @DeleteMapping("/{id}")
     fun deleteAluno(
         @PathVariable id: Long,
-        @RequestHeader("Authorization") authorization: String,
+        
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<Void> {
         alunoInput.deleteAluno(id)

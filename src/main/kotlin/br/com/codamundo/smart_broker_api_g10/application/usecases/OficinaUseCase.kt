@@ -6,7 +6,9 @@ import br.com.codamundo.smart_broker_api_g10.domain.exceptions.NotFoundException
 import br.com.codamundo.smart_broker_api_g10.infra.database.entities.OficinaEntity
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.requestBodys.OficinaRequest
 import br.com.codamundo.smart_broker_api_g10.shared.dto.controllers.responses.OficinaResponse
+import org.springframework.stereotype.Service
 
+@Service
 class OficinaUseCase(
     private val databaseOutput: DatabaseOutput
 ) : OficinaInput {

@@ -14,7 +14,6 @@ class CorrecaoDeAtividadesController(private val correcaoDeAtividadesInput: Corr
     fun corrigirAtividade(
         @PathVariable atividadeId: Long,
         @PathVariable alunoId: Long,
-        @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?,
         @RequestBody respostaBodyDto: RespostaBodyDto
     ): ResponseEntity<CorrecaoResponse> {
@@ -26,7 +25,6 @@ class CorrecaoDeAtividadesController(private val correcaoDeAtividadesInput: Corr
     @GetMapping("/aluno/{alunoId}")
     fun getRespostasPorAluno(
         @PathVariable alunoId: Long,
-        @RequestHeader("Authorization") authorization: String,
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<List<CorrecaoResponse>> {
         val respostas = correcaoDeAtividadesInput.findRespostasByAlunoId(alunoId)
@@ -37,7 +35,7 @@ class CorrecaoDeAtividadesController(private val correcaoDeAtividadesInput: Corr
     @DeleteMapping("/atividade/{atividadeId}")
     fun deletarRespostasPorAtividade(
         @PathVariable atividadeId: Long,
-        @RequestHeader("Authorization") authorization: String,
+
         @RequestHeader(value = "X-Request-ID", required = false) requestId: String?
     ): ResponseEntity<Void> {
         correcaoDeAtividadesInput.deleteRespostasByAtividadeId(atividadeId)
