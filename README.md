@@ -95,6 +95,62 @@ smart_broker_api_g10
 
 ### Diagrama Entidade-Relacionamento (ER)
 
+O diagrama representa um modelo de banco de dados, com várias entidades conectadas por relações entre elas. Cada entidade contém atributos que definem suas características. Abaixo estão as entidades e seus respectivos atributos, seguidos pelos relacionamentos entre elas:
+
+Entidades e seus atributos:
+ALUNO:
+
+id (Long): Identificador único do aluno.
+nome (String): Nome do aluno.
+idade (Integer): Idade do aluno.
+oficinaCadastrada (String): Oficina na qual o aluno está inscrito.
+turma (String): Turma do aluno.
+pessoaComDeficiencia (Boolean): Indica se o aluno possui alguma deficiência.
+estiloAprendizagem (String): Estilo de aprendizagem do aluno.
+interessesHobbies (String): Interesses e hobbies do aluno.
+passaTempoPreferido (String): Atividades preferidas no tempo livre.
+filmeSeriePreferido (String): Filme ou série favorita.
+artista (String): Artista favorito.
+ATIVIDADE:
+
+id (Long): Identificador único da atividade.
+enunciado (String): Enunciado da atividade.
+respostaEsperada (String): Resposta esperada para a atividade.
+areaConhecimento (String): Área do conhecimento a que a atividade pertence.
+nivelDificuldade (String): Nível de dificuldade da atividade.
+objetivosAprendizagem (String): Objetivos de aprendizagem da atividade.
+PROFESSOR:
+
+id (Long): Identificador único do professor.
+nome (String): Nome do professor.
+especialidade (String): Especialidade do professor.
+CONTEXTO:
+
+id (Long): Identificador único do contexto.
+prompt (String): Prompt que guia a atividade.
+coeficienteDidatico (Double): Coeficiente didático usado para gerar feedback personalizado.
+OFICINA:
+
+id (Long): Identificador único da oficina.
+escola (String): Nome da escola onde a oficina é realizada.
+TURMA:
+
+id (Long): Identificador único da turma.
+quantidadeAlunos (Integer): Quantidade de alunos na turma.
+RESPOSTA:
+
+id (Long): Identificador único da resposta do aluno.
+respostaAluno (String): Resposta dada pelo aluno.
+coeficienteAcertividade (Double): Avaliação da precisão da resposta.
+dataHoraResposta (LocalDateTime): Data e hora da resposta.
+Relacionamentos:
+ALUNO está associado a uma TURMA.
+TURMA pode realizar várias ATIVIDADES.
+Um PROFESSOR cria uma ATIVIDADE.
+Cada ATIVIDADE está associada a um CONTEXTO.
+ATIVIDADE está ligada a uma ou mais RESPOSTAS dos alunos.
+Uma TURMA pertence a uma OFICINA.
+
 ```mermaid
 graph LR;
 
